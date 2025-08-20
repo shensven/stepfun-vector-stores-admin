@@ -1,24 +1,14 @@
 import axiosInstance from './api'
 import type { PaginatedResponse } from './api'
 
-export interface FilesListParams {
-  limit?: number
-  order?: 'asc' | 'desc'
-  before?: string
-  after?: string
-  type?: 'document' | 'image' | 'video' | 'audio' | 'other'
-}
-
-export interface Files {
+export interface StepfunFile {
   id: string
   object: 'file'
+  bytes: number
   created_at: number
-  name: string
   filename: string
-  type: 'document' | 'image' | 'video' | 'audio' | 'other'
-  size: number
-  mime_type: string
-  status: 'uploading' | 'processed' | 'error'
+  purpose: 'file-extract' | 'retrieval-text' | 'retrieval-image' | 'storage'
+  status: 'success' | 'processed'
 }
 
 export interface FilesDeleteResponse {
@@ -40,10 +30,9 @@ export interface FilesCreateResponse {
 export class FilesApiService {
   private static basePath = '/files'
 
-  static async getList(params?: FilesListParams) {
-    const { data } = await axiosInstance.get<PaginatedResponse<Files>>(
-      this.basePath,
-      { params }
+  static async getList() {
+    const { data } = await axiosInstance.get<PaginatedResponse<StepfunFile>>(
+      this.basePath
     )
     return data
   }

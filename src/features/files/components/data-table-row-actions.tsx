@@ -1,7 +1,7 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { type Row } from '@tanstack/react-table'
-import { type VectorStores } from '@/services/vectorStoresAPI'
-import { Trash2 } from 'lucide-react'
+import { type StepfunFile } from '@/services/filesAPI'
+import { Trash2, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -10,7 +10,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useVectorStores } from './vector-stores-provider'
+import { useFiles } from './files-provider'
 
 type DataTableRowActionsProps<TData> = {
   row: Row<TData>
@@ -19,9 +19,9 @@ type DataTableRowActionsProps<TData> = {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const vectorStore = row.original as VectorStores
+  const file = row.original as StepfunFile
 
-  const { setOpen, setCurrentRow } = useVectorStores()
+  const { setOpen, setCurrentRow } = useFiles()
 
   return (
     <DropdownMenu modal={false}>
@@ -35,10 +35,18 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
+        <DropdownMenuItem disabled>
+          下载
+          <DropdownMenuShortcut>
+            <Download size={16} />
+          </DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem disabled>复制链接</DropdownMenuItem>
+        <DropdownMenuItem disabled>预览</DropdownMenuItem>
         <DropdownMenuItem
           variant='destructive'
           onClick={() => {
-            setCurrentRow(vectorStore)
+            setCurrentRow(file)
             setOpen('delete')
           }}
         >

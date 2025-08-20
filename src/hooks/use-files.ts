@@ -1,15 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  FilesApiService,
-  type FilesListParams,
-  type FilesCreateParams,
-} from '@/services/filesAPI'
+import { FilesApiService, type FilesCreateParams } from '@/services/filesAPI'
 import { toast } from 'sonner'
 
-export function useList(params?: FilesListParams) {
+export function useList() {
   return useQuery({
-    queryKey: ['files', params],
-    queryFn: () => FilesApiService.getList(params),
+    queryKey: [''],
+    queryFn: () => FilesApiService.getList(),
     staleTime: 5 * 60 * 1000, // 5分钟内数据保持新鲜
   })
 }

@@ -20,13 +20,10 @@ export function DataTableViewOptions<TData>({
   // 列名映射
   const columnNameMap: Record<string, string> = {
     id: 'ID',
-    name: '名称',
-    type: '类型',
-    total_files: '总文件数',
-    completed_files: '已完成',
-    in_progress_files: '进行中',
-    failed_files: '失败',
-    cancelled_files: '已取消',
+    filename: '文件名',
+    purpose: '用途',
+    status: '状态',
+    bytes: '文件大小',
     created_at: '创建时间',
   }
 

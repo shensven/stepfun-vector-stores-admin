@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { type Files } from '@/services/filesAPI'
+import { type StepfunFile } from '@/services/filesAPI'
 import useDialogState from '@/hooks/use-dialog-state'
 
 type FilesDialogType = 'create' | 'delete'
@@ -7,15 +7,15 @@ type FilesDialogType = 'create' | 'delete'
 type FilesContextType = {
   open: FilesDialogType | null
   setOpen: (str: FilesDialogType | null) => void
-  currentRow: Files | null
-  setCurrentRow: React.Dispatch<React.SetStateAction<Files | null>>
+  currentRow: StepfunFile | null
+  setCurrentRow: React.Dispatch<React.SetStateAction<StepfunFile | null>>
 }
 
 const FilesContext = React.createContext<FilesContextType | null>(null)
 
 export function FilesProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useDialogState<FilesDialogType>(null)
-  const [currentRow, setCurrentRow] = useState<Files | null>(null)
+  const [currentRow, setCurrentRow] = useState<StepfunFile | null>(null)
 
   return (
     <FilesContext value={{ open, setOpen, currentRow, setCurrentRow }}>

@@ -38,7 +38,7 @@ axiosInstance.interceptors.response.use(
 
 export default axiosInstance
 
-// 通用API响应类型
+// 通用分页响应类型
 export interface PaginatedResponse<T> {
   object: 'list'
   data: T[]

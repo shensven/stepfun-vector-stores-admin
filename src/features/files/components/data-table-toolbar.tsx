@@ -2,8 +2,8 @@ import { Cross2Icon } from '@radix-ui/react-icons'
 import { type Table } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { DataTableViewOptions } from '../components/data-table-view-options'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
+import { DataTableViewOptions } from './data-table-view-options'
 
 type DataTableToolbarProps<TData> = {
   table: Table<TData>
@@ -19,19 +19,31 @@ export function DataTableToolbar<TData>({
     <div className='flex items-center justify-between'>
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
-          placeholder='按名称或 ID 搜索...'
+          placeholder='按文件名或 ID 搜索...'
           value={table.getState().globalFilter ?? ''}
           onChange={(event) => table.setGlobalFilter(event.target.value)}
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('type') && (
+          {table.getColumn('purpose') && (
             <DataTableFacetedFilter
-              column={table.getColumn('type')}
-              title='类型'
+              column={table.getColumn('purpose')}
+              title='用途'
               options={[
-                { label: '文本', value: 'text' },
-                { label: '图片', value: 'image' },
+                { label: '文件提取', value: 'file-extract' },
+                { label: '文本检索', value: 'retrieval-text' },
+                { label: '图片检索', value: 'retrieval-image' },
+                { label: '存储', value: 'storage' },
+              ]}
+            />
+          )}
+          {table.getColumn('status') && (
+            <DataTableFacetedFilter
+              column={table.getColumn('status')}
+              title='状态'
+              options={[
+                { label: '成功', value: 'success' },
+                { label: '已处理', value: 'processed' },
               ]}
             />
           )}

@@ -29,6 +29,16 @@ export interface VectorStoresDeleteResponse {
   deleted: boolean
 }
 
+export interface VectorStoresCreateParams {
+  name: string
+  type: 'text' | 'image'
+}
+
+export interface VectorStoresCreateResponse {
+  id: string
+  name: string
+}
+
 export class VectorStoresApiService {
   private static basePath = '/vector_stores'
 
@@ -43,6 +53,14 @@ export class VectorStoresApiService {
   static async deleteItem(vectorStoreId: string) {
     const { data } = await axiosInstance.delete<VectorStoresDeleteResponse>(
       `${this.basePath}/${vectorStoreId}`
+    )
+    return data
+  }
+
+  static async createItem(params: VectorStoresCreateParams) {
+    const { data } = await axiosInstance.post<VectorStoresCreateResponse>(
+      this.basePath,
+      params
     )
     return data
   }

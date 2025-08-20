@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
@@ -36,15 +35,6 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuItem
-          onClick={() => {
-            setCurrentRow(vectorStore)
-            setOpen('update')
-          }}
-        >
-          编辑
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem
           variant='destructive'
           onClick={() => {

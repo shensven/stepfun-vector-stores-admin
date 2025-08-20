@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 
 export function useList() {
   return useQuery({
-    queryKey: [''],
+    queryKey: ['files'],
     queryFn: () => FilesApiService.getList(),
     staleTime: 5 * 60 * 1000, // 5分钟内数据保持新鲜
   })

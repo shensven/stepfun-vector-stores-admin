@@ -1,9 +1,48 @@
+import { useDelete } from '@/hooks/use-files'
+import { ConfirmDialog } from '@/components/confirm-dialog'
 import { useFiles } from './files-provider'
 
 export function FilesDeleteDialog() {
-  const { open, currentRow } = useFiles()
+  const { open, setOpen, currentRow, setCurrentRow } = useFiles()
+  const deleteMutation = useDelete()
 
-  if (open !== 'delete' || !currentRow) return null
+  const handleDelete = async () => {
+    if (!currentRow) return
 
-  return <div>文件删除对话框 - 待实现</div>
+    try {
+      await deleteMutation.mutateAsync(currentRow.id)
+      // 删除成功后关闭对话框并清理状态
+      setOpen(null)
+      setTimeout(() => {
+        setCurrentRow(null)
+      }, 300)
+    } catch (_error) {
+      // 错误已在 hook 中处理，这里不需要额外处理
+    }
+  }
+
+  if (!currentRow) return null
+
+  return (
+    <ConfirmDialog
+      key='files-delete'
+      destructive
+      open={open === 'delete'}
+      onOpenChange={(state) => {
+        if (deleteMutation.isPending) return // 防止在删除过程中关闭对话框
+        setOpen(state ? 'delete' : null)
+        if (!state) {
+          setTimeout(() => {
+            setCurrentRow(null)
+          }, 300)
+        }
+      }}
+      handleConfirm={handleDelete}
+      className='max-w-md'
+      title={`删除文件 ${currentRow.filename}`}
+      desc='此操作无法撤销！'
+      confirmText={deleteMutation.isPending ? '删除中...' : '删除'}
+      disabled={deleteMutation.isPending}
+    />
+  )
 }

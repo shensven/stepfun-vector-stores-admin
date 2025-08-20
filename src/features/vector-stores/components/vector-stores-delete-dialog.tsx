@@ -28,12 +28,14 @@ export function VectorStoresDeleteDialog() {
       key='vector-stores-delete'
       destructive
       open={open === 'delete'}
-      onOpenChange={() => {
+      onOpenChange={(state) => {
         if (deleteMutation.isPending) return // 防止在删除过程中关闭对话框
-        setOpen('delete')
-        setTimeout(() => {
-          setCurrentRow(null)
-        }, 500)
+        setOpen(state ? 'delete' : null)
+        if (!state) {
+          setTimeout(() => {
+            setCurrentRow(null)
+          }, 300)
+        }
       }}
       handleConfirm={handleDelete}
       className='max-w-md'

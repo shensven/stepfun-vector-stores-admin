@@ -11,7 +11,7 @@ export interface StepfunFile {
   status: 'success' | 'processed'
 }
 
-export interface FilesDeleteResponse {
+export interface StepfunFileDeleteResponse {
   id: string
   object: 'file'
   deleted: boolean
@@ -38,7 +38,7 @@ export class FilesApiService {
   }
 
   static async deleteItem(fileId: string) {
-    const { data } = await axiosInstance.delete<FilesDeleteResponse>(
+    const { data } = await axiosInstance.delete<StepfunFileDeleteResponse>(
       `${this.basePath}/${fileId}`
     )
     return data

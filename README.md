@@ -1,4 +1,4 @@
-# Shadcn Admin Dashboard
+# 阶跃星辰知识库管理系统
 
 Admin Dashboard UI crafted with Shadcn and Vite. Built with responsiveness and accessibility in mind.
 

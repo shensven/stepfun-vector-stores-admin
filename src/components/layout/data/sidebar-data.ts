@@ -31,9 +31,9 @@ export const sidebarData: SidebarData = {
   },
   teams: [
     {
-      name: 'Shadcn Admin',
+      name: '阶跃星辰知识库',
       logo: Command,
-      plan: 'Vite + ShadcnUI',
+      plan: '管理系统',
     },
     {
       name: 'Acme Inc',

@@ -56,6 +56,11 @@ export const sidebarData: SidebarData = {
           icon: LayoutDashboard,
         },
         {
+          title: '知识库',
+          url: '/vectors-store',
+          icon: LayoutDashboard,
+        },
+        {
           title: 'Tasks',
           url: '/tasks',
           icon: ListTodo,

@@ -1,7 +1,7 @@
 import { type ColumnDef } from '@tanstack/react-table'
+import { type VectorStores } from '@/services/vectorStoresAPI'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-import { type VectorStores } from '@/services/vectorStoresAPI'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
@@ -35,7 +35,9 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='ID' />
     ),
-    cell: ({ row }) => <div className='w-[120px] font-mono text-xs'>{row.getValue('id')}</div>,
+    cell: ({ row }) => (
+      <div className='w-[120px] font-mono text-xs'>{row.getValue('id')}</div>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
@@ -88,7 +90,9 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     ),
     cell: ({ row }) => {
       const fileCounts = row.original.file_counts
-      return <div className='text-center text-green-600'>{fileCounts.completed}</div>
+      return (
+        <div className='text-center text-green-600'>{fileCounts.completed}</div>
+      )
     },
   },
   {
@@ -98,7 +102,11 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     ),
     cell: ({ row }) => {
       const fileCounts = row.original.file_counts
-      return <div className='text-center text-blue-600'>{fileCounts.in_progress}</div>
+      return (
+        <div className='text-center text-blue-600'>
+          {fileCounts.in_progress}
+        </div>
+      )
     },
   },
   {
@@ -109,7 +117,9 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     cell: ({ row }) => {
       const fileCounts = row.original.file_counts
       return (
-        <div className={`text-center ${fileCounts.failed > 0 ? 'text-red-600' : 'text-gray-400'}`}>
+        <div
+          className={`text-center ${fileCounts.failed > 0 ? 'text-red-600' : 'text-gray-400'}`}
+        >
           {fileCounts.failed}
         </div>
       )
@@ -123,7 +133,9 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     cell: ({ row }) => {
       const fileCounts = row.original.file_counts
       return (
-        <div className={`text-center ${fileCounts.cancelled > 0 ? 'text-orange-600' : 'text-gray-400'}`}>
+        <div
+          className={`text-center ${fileCounts.cancelled > 0 ? 'text-orange-600' : 'text-gray-400'}`}
+        >
           {fileCounts.cancelled}
         </div>
       )
@@ -139,7 +151,8 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
       const date = new Date(timestamp * 1000)
       return (
         <div className='text-sm'>
-          {date.toLocaleDateString('zh-CN')} {date.toLocaleTimeString('zh-CN', { hour12: false })}
+          {date.toLocaleDateString('zh-CN')}{' '}
+          {date.toLocaleTimeString('zh-CN', { hour12: false })}
         </div>
       )
     },

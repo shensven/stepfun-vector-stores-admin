@@ -26,7 +26,7 @@ export interface VectorStores {
 export class VectorStoresApiService {
   private static basePath = '/vector_stores'
 
-  static async getUsers(
+  static async getList(
     params?: VectorStoresListParams
   ): Promise<PaginatedResponse<VectorStores>> {
     const { data } = await axiosInstance.get<PaginatedResponse<VectorStores>>(

@@ -1,23 +1,16 @@
 import { useState } from 'react'
 import { type Table } from '@tanstack/react-table'
-import { Trash2, CircleArrowUp, ArrowUpDown, Download } from 'lucide-react'
+import type { VectorStores } from '@/services/vectorStoresAPI'
+import { Trash2, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { sleep } from '@/utils/sleep'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { BulkActionsToolbar } from '@/components/bulk-actions-toolbar'
-import { priorities, statuses } from '../data/data'
-import { type Task } from '../data/schema'
 import { TasksMultiDeleteDialog } from './tasks-multi-delete-dialog'
 
 type DataTableBulkActionsProps<TData> = {
@@ -30,120 +23,24 @@ export function DataTableBulkActions<TData>({
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const selectedRows = table.getFilteredSelectedRowModel().rows
 
-  const handleBulkStatusChange = (status: string) => {
-    const selectedTasks = selectedRows.map((row) => row.original as Task)
-    toast.promise(sleep(2000), {
-      loading: 'Updating status...',
-      success: () => {
-        table.resetRowSelection()
-        return `Status updated to "${status}" for ${selectedTasks.length} task${selectedTasks.length > 1 ? 's' : ''}.`
-      },
-      error: 'Error',
-    })
-    table.resetRowSelection()
-  }
-
-  const handleBulkPriorityChange = (priority: string) => {
-    const selectedTasks = selectedRows.map((row) => row.original as Task)
-    toast.promise(sleep(2000), {
-      loading: 'Updating priority...',
-      success: () => {
-        table.resetRowSelection()
-        return `Priority updated to "${priority}" for ${selectedTasks.length} task${selectedTasks.length > 1 ? 's' : ''}.`
-      },
-      error: 'Error',
-    })
-    table.resetRowSelection()
-  }
-
   const handleBulkExport = () => {
-    const selectedTasks = selectedRows.map((row) => row.original as Task)
+    const selectedVectorStores = selectedRows.map(
+      (row) => row.original as VectorStores
+    )
     toast.promise(sleep(2000), {
-      loading: 'Exporting tasks...',
+      loading: '导出知识库...',
       success: () => {
         table.resetRowSelection()
-        return `Exported ${selectedTasks.length} task${selectedTasks.length > 1 ? 's' : ''} to CSV.`
+        return `已导出 ${selectedVectorStores.length} 个知识库到 CSV`
       },
-      error: 'Error',
+      error: '导出失败',
     })
     table.resetRowSelection()
   }
 
   return (
     <>
-      <BulkActionsToolbar table={table} entityName='task'>
-        <DropdownMenu>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant='outline'
-                  size='icon'
-                  className='size-8'
-                  aria-label='Update status'
-                  title='Update status'
-                >
-                  <CircleArrowUp />
-                  <span className='sr-only'>Update status</span>
-                </Button>
-              </DropdownMenuTrigger>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Update status</p>
-            </TooltipContent>
-          </Tooltip>
-          <DropdownMenuContent sideOffset={14}>
-            {statuses.map((status) => (
-              <DropdownMenuItem
-                key={status.value}
-                defaultValue={status.value}
-                onClick={() => handleBulkStatusChange(status.value)}
-              >
-                {status.icon && (
-                  <status.icon className='text-muted-foreground size-4' />
-                )}
-                {status.label}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <DropdownMenu>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant='outline'
-                  size='icon'
-                  className='size-8'
-                  aria-label='Update priority'
-                  title='Update priority'
-                >
-                  <ArrowUpDown />
-                  <span className='sr-only'>Update priority</span>
-                </Button>
-              </DropdownMenuTrigger>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Update priority</p>
-            </TooltipContent>
-          </Tooltip>
-          <DropdownMenuContent sideOffset={14}>
-            {priorities.map((priority) => (
-              <DropdownMenuItem
-                key={priority.value}
-                defaultValue={priority.value}
-                onClick={() => handleBulkPriorityChange(priority.value)}
-              >
-                {priority.icon && (
-                  <priority.icon className='text-muted-foreground size-4' />
-                )}
-                {priority.label}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
+      <BulkActionsToolbar table={table} entityName='知识库'>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -151,15 +48,15 @@ export function DataTableBulkActions<TData>({
               size='icon'
               onClick={() => handleBulkExport()}
               className='size-8'
-              aria-label='Export tasks'
-              title='Export tasks'
+              aria-label='导出知识库'
+              title='导出知识库'
             >
               <Download />
-              <span className='sr-only'>Export tasks</span>
+              <span className='sr-only'>导出知识库</span>
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Export tasks</p>
+            <p>导出知识库</p>
           </TooltipContent>
         </Tooltip>
 
@@ -170,15 +67,15 @@ export function DataTableBulkActions<TData>({
               size='icon'
               onClick={() => setShowDeleteConfirm(true)}
               className='size-8'
-              aria-label='Delete selected tasks'
-              title='Delete selected tasks'
+              aria-label='删除选中的知识库'
+              title='删除选中的知识库'
             >
               <Trash2 />
-              <span className='sr-only'>Delete selected tasks</span>
+              <span className='sr-only'>删除选中的知识库</span>
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Delete selected tasks</p>
+            <p>删除选中的知识库</p>
           </TooltipContent>
         </Tooltip>
       </BulkActionsToolbar>

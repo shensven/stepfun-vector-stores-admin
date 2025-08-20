@@ -1,9 +1,9 @@
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useTasks } from './tasks-provider'
+import { useVectorsStore } from './vectors-store-provider'
 
 export function VectorsStorePrimaryButtons() {
-  const { setOpen } = useTasks()
+  const { setOpen } = useVectorsStore()
   return (
     <div className='flex gap-2'>
       <Button className='space-x-1' onClick={() => setOpen('create')}>

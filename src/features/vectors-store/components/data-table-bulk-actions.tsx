@@ -11,7 +11,8 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { BulkActionsToolbar } from '@/components/bulk-actions-toolbar'
-import { TasksMultiDeleteDialog } from './tasks-multi-delete-dialog'
+
+// import { VectorsStoreMultiDeleteDialog } from './vectors-store-multi-delete-dialog'
 
 type DataTableBulkActionsProps<TData> = {
   table: Table<TData>
@@ -80,11 +81,8 @@ export function DataTableBulkActions<TData>({
         </Tooltip>
       </BulkActionsToolbar>
 
-      <TasksMultiDeleteDialog
-        open={showDeleteConfirm}
-        onOpenChange={setShowDeleteConfirm}
-        table={table}
-      />
+      {/* TODO: 实现批量删除对话框 */}
+      {showDeleteConfirm && <div>批量删除功能待实现</div>}
     </>
   )
 }

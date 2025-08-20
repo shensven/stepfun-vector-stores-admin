@@ -1,29 +1,22 @@
 import { showSubmittedData } from '@/utils/show-submitted-data'
 import { ConfirmDialog } from '@/components/confirm-dialog'
-import { TasksImportDialog } from './tasks-import-dialog'
-import { TasksMutateDrawer } from './tasks-mutate-drawer'
-import { useTasks } from './tasks-provider'
+import { VectorsStoreMutateDrawer } from './vectors-store-mutate-drawer'
+import { useVectorsStore } from './vectors-store-provider'
 
-export function TasksDialogs() {
-  const { open, setOpen, currentRow, setCurrentRow } = useTasks()
+export function VectorsStoreDialogs() {
+  const { open, setOpen, currentRow, setCurrentRow } = useVectorsStore()
   return (
     <>
-      <TasksMutateDrawer
-        key='task-create'
+      <VectorsStoreMutateDrawer
+        key='vectors-store-create'
         open={open === 'create'}
         onOpenChange={() => setOpen('create')}
       />
 
-      <TasksImportDialog
-        key='tasks-import'
-        open={open === 'import'}
-        onOpenChange={() => setOpen('import')}
-      />
-
       {currentRow && (
         <>
-          <TasksMutateDrawer
-            key={`task-update-${currentRow.id}`}
+          <VectorsStoreMutateDrawer
+            key={`vectors-store-update-${currentRow.id}`}
             open={open === 'update'}
             onOpenChange={() => {
               setOpen('update')
@@ -35,7 +28,7 @@ export function TasksDialogs() {
           />
 
           <ConfirmDialog
-            key='task-delete'
+            key='vectors-store-delete'
             destructive
             open={open === 'delete'}
             onOpenChange={() => {
@@ -49,21 +42,17 @@ export function TasksDialogs() {
               setTimeout(() => {
                 setCurrentRow(null)
               }, 500)
-              showSubmittedData(
-                currentRow,
-                'The following task has been deleted:'
-              )
+              showSubmittedData(currentRow, '以下知识库已被删除:')
             }}
             className='max-w-md'
-            title={`Delete this task: ${currentRow.id} ?`}
+            title={`删除知识库: ${currentRow.name} ?`}
             desc={
               <>
-                You are about to delete a task with the ID{' '}
-                <strong>{currentRow.id}</strong>. <br />
-                This action cannot be undone.
+                您即将删除知识库 <strong>{currentRow.name}</strong>. <br />
+                此操作无法撤销。
               </>
             }
-            confirmText='Delete'
+            confirmText='删除'
           />
         </>
       )}

@@ -4,16 +4,16 @@ import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { TasksDialogs } from './components/tasks-dialogs'
-import { TasksProvider } from './components/tasks-provider'
+import { VectorsStoreDialogs } from './components/vectors-store-dialogs'
 import { VectorsStorePrimaryButtons } from './components/vectors-store-primary-buttons'
+import { VectorsStoreProvider } from './components/vectors-store-provider'
 import { VectorsStoreTable } from './components/vectors-store-table'
 
 export function VectorsStore() {
   const { data } = useList()
 
   return (
-    <TasksProvider>
+    <VectorsStoreProvider>
       <Header fixed>
         <div className='ms-auto flex items-center space-x-4'>
           <ThemeSwitch />
@@ -35,7 +35,7 @@ export function VectorsStore() {
         </div>
       </Main>
 
-      <TasksDialogs />
-    </TasksProvider>
+      <VectorsStoreDialogs />
+    </VectorsStoreProvider>
   )
 }

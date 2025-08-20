@@ -36,7 +36,7 @@ const formSchema = z.object({
 })
 type VectorStoreForm = z.infer<typeof formSchema>
 
-export function TasksMutateDrawer({
+export function VectorsStoreMutateDrawer({
   open,
   onOpenChange,
   currentRow,

@@ -46,30 +46,3 @@ export interface PaginatedResponse<T> {
   last_id?: string
   has_more?: boolean
 }
-
-// export class ApiService {
-//   static async get<T>(url: string, params?: unknown): Promise<T> {
-//     const response = await axiosInstance.get<ApiResponse<T>>(url, { params })
-//     return response.data.data
-//   }
-
-//   static async post<T>(url: string, data?: unknown): Promise<T> {
-//     const response = await axiosInstance.post<ApiResponse<T>>(url, data)
-//     return response.data.data
-//   }
-
-//   static async put<T>(url: string, data?: unknown): Promise<T> {
-//     const response = await axiosInstance.put<ApiResponse<T>>(url, data)
-//     return response.data.data
-//   }
-
-//   static async patch<T>(url: string, data?: unknown): Promise<T> {
-//     const response = await axiosInstance.patch<ApiResponse<T>>(url, data)
-//     return response.data.data
-//   }
-
-//   static async delete<T>(url: string): Promise<T> {
-//     const response = await axiosInstance.delete<ApiResponse<T>>(url)
-//     return response.data.data
-//   }
-// }

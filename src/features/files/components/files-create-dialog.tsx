@@ -109,48 +109,45 @@ export function FilesCreateDialog() {
       <DialogContent className='sm:max-w-md'>
         <DialogHeader className='text-start'>
           <DialogTitle>上传文件</DialogTitle>
-          <DialogDescription>
-            上传一个新文件到系统中进行处理。
-          </DialogDescription>
+          <DialogDescription>上传一个文件到文件服务</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
             id='file-form'
             onSubmit={form.handleSubmit(onSubmit)}
-            className='space-y-4'
+            className='my-4 space-y-6'
           >
             <FormField
               control={form.control}
               name='purpose'
               render={({ field }) => (
-                <FormItem className='grid grid-cols-6 items-center space-y-0 gap-x-4 gap-y-1'>
-                  <FormLabel className='col-span-2 text-end'>用途</FormLabel>
+                <FormItem className='space-y-2'>
+                  <FormLabel>文件上传的意图</FormLabel>
                   <FormControl>
                     <RadioGroup
-                      orientation='horizontal'
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      className='col-span-4 flex flex-col space-y-2'
+                      className='col-span-4 flex flex-wrap gap-x-8'
                     >
-                      <FormItem className='flex items-center space-y-0 space-x-3'>
+                      <FormItem className='flex items-center'>
                         <FormControl>
                           <RadioGroupItem value='file-extract' />
                         </FormControl>
                         <FormLabel className='font-normal'>文件提取</FormLabel>
                       </FormItem>
-                      <FormItem className='flex items-center space-y-0 space-x-3'>
+                      <FormItem className='flex items-center'>
                         <FormControl>
                           <RadioGroupItem value='retrieval-text' />
                         </FormControl>
                         <FormLabel className='font-normal'>文本检索</FormLabel>
                       </FormItem>
-                      <FormItem className='flex items-center space-y-0 space-x-3'>
+                      <FormItem className='flex items-center'>
                         <FormControl>
                           <RadioGroupItem value='retrieval-image' />
                         </FormControl>
                         <FormLabel className='font-normal'>图片检索</FormLabel>
                       </FormItem>
-                      <FormItem className='flex items-center space-y-0 space-x-3'>
+                      <FormItem className='flex items-center'>
                         <FormControl>
                           <RadioGroupItem value='storage' />
                         </FormControl>
@@ -166,7 +163,7 @@ export function FilesCreateDialog() {
               control={form.control}
               name='uploadType'
               render={({ field }) => (
-                <FormItem className='space-y-3'>
+                <FormItem className='space-y-2'>
                   <FormLabel>上传方式</FormLabel>
                   <FormControl>
                     <Tabs
@@ -175,8 +172,8 @@ export function FilesCreateDialog() {
                       defaultValue='file'
                     >
                       <TabsList className='grid w-full grid-cols-2'>
-                        <TabsTrigger value='file'>本地文件上传</TabsTrigger>
-                        <TabsTrigger value='url'>从URL上传</TabsTrigger>
+                        <TabsTrigger value='file'>本地上传</TabsTrigger>
+                        <TabsTrigger value='url'>从 URL 上传</TabsTrigger>
                       </TabsList>
                       <TabsContent value='file' className='space-y-4'>
                         <FormField

@@ -73,7 +73,7 @@ export function VectorStoresCreateDialog() {
           <form
             id='vector-store-form'
             onSubmit={form.handleSubmit(onSubmit)}
-            className='space-y-4'
+            className='my-4 space-y-6'
           >
             <FormField
               control={form.control}
@@ -101,18 +101,17 @@ export function VectorStoresCreateDialog() {
                   <FormLabel className='col-span-2 text-end'>类型</FormLabel>
                   <FormControl>
                     <RadioGroup
-                      orientation='horizontal'
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      className='col-span-4 flex flex-col space-y-2'
+                      className='col-span-4 flex flex-col flex-wrap gap-x-6 gap-y-2'
                     >
-                      <FormItem className='flex items-center space-y-0 space-x-3'>
+                      <FormItem className='flex items-center'>
                         <FormControl>
                           <RadioGroupItem value='text' />
                         </FormControl>
                         <FormLabel className='font-normal'>文本</FormLabel>
                       </FormItem>
-                      <FormItem className='flex items-center space-y-0 space-x-3'>
+                      <FormItem className='flex items-center'>
                         <FormControl>
                           <RadioGroupItem value='image' />
                         </FormControl>

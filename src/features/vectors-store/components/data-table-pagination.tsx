@@ -27,7 +27,8 @@ export function DataTablePagination<TData>({
       style={{ overflowClipMargin: 1 }}
     >
       <div className='text-muted-foreground hidden flex-1 text-sm sm:block'>
-        已选择 {table.getFilteredSelectedRowModel().rows.length} / {table.getFilteredRowModel().rows.length} 项
+        已选择 {table.getFilteredSelectedRowModel().rows.length} /{' '}
+        {table.getFilteredRowModel().rows.length} 项
       </div>
       <div className='flex items-center sm:space-x-6 lg:space-x-8'>
         <div className='flex items-center space-x-2'>
@@ -51,7 +52,8 @@ export function DataTablePagination<TData>({
           </Select>
         </div>
         <div className='flex w-[100px] items-center justify-center text-sm font-medium'>
-          第 {table.getState().pagination.pageIndex + 1} / {table.getPageCount()} 页
+          第 {table.getState().pagination.pageIndex + 1} /{' '}
+          {table.getPageCount()} 页
         </div>
         <div className='flex items-center space-x-2'>
           <Button

@@ -23,15 +23,26 @@ export interface VectorStores {
   }
 }
 
+export interface VectorStoresDeleteResponse {
+  id: string
+  object: 'vector_store'
+  deleted: boolean
+}
+
 export class VectorStoresApiService {
   private static basePath = '/vector_stores'
 
-  static async getList(
-    params?: VectorStoresListParams
-  ): Promise<PaginatedResponse<VectorStores>> {
+  static async getList(params?: VectorStoresListParams) {
     const { data } = await axiosInstance.get<PaginatedResponse<VectorStores>>(
       this.basePath,
       { params }
+    )
+    return data
+  }
+
+  static async deleteItem(vectorStoreId: string) {
+    const { data } = await axiosInstance.delete<VectorStoresDeleteResponse>(
+      `${this.basePath}/${vectorStoreId}`
     )
     return data
   }

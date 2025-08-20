@@ -11,21 +11,19 @@ export interface StepfunFile {
   status: 'success' | 'processed'
 }
 
-export interface StepfunFileDeleteResponse {
+export type StepfunFileDeleteResponse = {
   id: string
   object: 'file'
   deleted: boolean
 }
 
-export interface FilesCreateParams {
-  name: string
-  type: 'document' | 'image' | 'video' | 'audio' | 'other'
+export type StepfunFileCreateParams = {
+  purpose: 'file-extract' | 'retrieval-text' | 'retrieval-image' | 'storage'
+  url?: string
+  file?: File
 }
 
-export interface FilesCreateResponse {
-  id: string
-  name: string
-}
+export type StepfunFileCreateResponse = Omit<StepfunFile, 'status'>
 
 export class FilesApiService {
   private static basePath = '/files'
@@ -44,10 +42,17 @@ export class FilesApiService {
     return data
   }
 
-  static async createItem(params: FilesCreateParams) {
-    const { data } = await axiosInstance.post<FilesCreateResponse>(
+  static async createItem(params: StepfunFileCreateParams) {
+    const formData = new FormData()
+    formData.append('purpose', params.purpose)
+
+    if (params.url) formData.append('url', params.url)
+    if (params.file) formData.append('file', params.file)
+
+    const { data } = await axiosInstance.post<StepfunFileCreateResponse>(
       this.basePath,
-      params
+      formData,
+      { headers: { 'Content-Type': 'multipart/form-data' } }
     )
     return data
   }

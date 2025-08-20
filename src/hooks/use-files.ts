@@ -1,5 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { FilesApiService, type FilesCreateParams } from '@/services/filesAPI'
+import {
+  FilesApiService,
+  type StepfunFileCreateParams,
+} from '@/services/filesAPI'
 import { toast } from 'sonner'
 
 export function useList() {
@@ -14,11 +17,11 @@ export function useCreate() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (params: FilesCreateParams) =>
+    mutationFn: (params: StepfunFileCreateParams) =>
       FilesApiService.createItem(params),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['files'] })
-      toast.success(`文件 "${data.name}" 已成功创建`)
+      toast.success(`文件 "${data.id}" 已成功上传`)
     },
   })
 }

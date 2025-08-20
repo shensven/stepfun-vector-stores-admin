@@ -19,6 +19,7 @@ import {
   MessagesSquare,
   ShieldCheck,
   Library,
+  Files,
 } from 'lucide-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 import { ClerkLogo } from '@/assets/clerk-logo'
@@ -60,6 +61,11 @@ export const sidebarData: SidebarData = {
           title: '知识库',
           url: '/vector-stores',
           icon: Library,
+        },
+        {
+          title: '文件管理',
+          url: '/files',
+          icon: Files,
         },
         {
           title: 'Tasks',

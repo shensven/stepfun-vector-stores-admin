@@ -18,6 +18,7 @@ import {
   Users,
   MessagesSquare,
   ShieldCheck,
+  Library,
 } from 'lucide-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 import { ClerkLogo } from '@/assets/clerk-logo'
@@ -57,8 +58,8 @@ export const sidebarData: SidebarData = {
         },
         {
           title: '知识库',
-          url: '/vectors-store',
-          icon: LayoutDashboard,
+          url: '/vector-stores',
+          icon: Library,
         },
         {
           title: 'Tasks',

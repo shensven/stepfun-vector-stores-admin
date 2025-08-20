@@ -1,20 +1,20 @@
-import { useList } from '@/hooks/use-vectors-store'
+import { useList } from '@/hooks/use-vector-stores'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { VectorsStoreCreateDialog } from './components/vectors-store-create-dialog'
-import { VectorsStoreDeleteDialog } from './components/vectors-store-delete-dialog'
-import { VectorsStorePrimaryButtons } from './components/vectors-store-primary-buttons'
-import { VectorsStoreProvider } from './components/vectors-store-provider'
-import { VectorsStoreTable } from './components/vectors-store-table'
+import { VectorStoresCreateDialog } from './components/vector-stores-create-dialog'
+import { VectorStoresDeleteDialog } from './components/vector-stores-delete-dialog'
+import { VectorStoresPrimaryButtons } from './components/vector-stores-primary-buttons'
+import { VectorStoresProvider } from './components/vector-stores-provider'
+import { VectorStoresTable } from './components/vector-stores-table'
 
-export function VectorsStore() {
+export function VectorStores() {
   const { data } = useList()
 
   return (
-    <VectorsStoreProvider>
+    <VectorStoresProvider>
       <Header fixed>
         <div className='ms-auto flex items-center space-x-4'>
           <ThemeSwitch />
@@ -29,15 +29,15 @@ export function VectorsStore() {
             <h2 className='text-2xl font-bold tracking-tight'>知识库</h2>
             <p className='text-muted-foreground'>管理和浏览您的向量知识库</p>
           </div>
-          <VectorsStorePrimaryButtons />
+          <VectorStoresPrimaryButtons />
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-y-0 lg:space-x-12'>
-          <VectorsStoreTable data={data?.data || []} />
+          <VectorStoresTable data={data?.data || []} />
         </div>
       </Main>
 
-      <VectorsStoreCreateDialog />
-      <VectorsStoreDeleteDialog />
-    </VectorsStoreProvider>
+      <VectorStoresCreateDialog />
+      <VectorStoresDeleteDialog />
+    </VectorStoresProvider>
   )
 }

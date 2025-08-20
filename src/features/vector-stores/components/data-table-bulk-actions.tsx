@@ -12,8 +12,6 @@ import {
 } from '@/components/ui/tooltip'
 import { BulkActionsToolbar } from '@/components/bulk-actions-toolbar'
 
-// import { VectorsStoreMultiDeleteDialog } from './vectors-store-multi-delete-dialog'
-
 type DataTableBulkActionsProps<TData> = {
   table: Table<TData>
 }

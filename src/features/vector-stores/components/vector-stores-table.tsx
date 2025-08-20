@@ -25,15 +25,15 @@ import {
 import { DataTableBulkActions } from './data-table-bulk-actions'
 import { DataTablePagination } from './data-table-pagination'
 import { DataTableToolbar } from './data-table-toolbar'
-import { vectorsStoreColumns as columns } from './vectors-store-columns'
+import { vectorStoresColumns as columns } from './vector-stores-columns'
 
-const route = getRouteApi('/_authenticated/vectors-store/')
+const route = getRouteApi('/_authenticated/vector-stores/')
 
 type DataTableProps = {
   data: VectorStores[]
 }
 
-export function VectorsStoreTable({ data }: DataTableProps) {
+export function VectorStoresTable({ data }: DataTableProps) {
   // Local UI-only states
   const [rowSelection, setRowSelection] = useState({})
   const [sorting, setSorting] = useState<SortingState>([])

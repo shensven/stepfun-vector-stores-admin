@@ -3,7 +3,7 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useCreate } from '@/hooks/use-vectors-store'
+import { useCreate } from '@/hooks/use-vector-stores'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { useVectorsStore } from './vectors-store-provider'
+import { useVectorStores } from './vector-stores-provider'
 
 const formSchema = z.object({
   name: z.string().min(1, '名称必填'),
@@ -32,8 +32,8 @@ const formSchema = z.object({
 
 type VectorStoreForm = z.infer<typeof formSchema>
 
-export function VectorsStoreCreateDialog() {
-  const { open, setOpen } = useVectorsStore()
+export function VectorStoresCreateDialog() {
+  const { open, setOpen } = useVectorStores()
   const createMutation = useCreate()
 
   const form = useForm<VectorStoreForm>({

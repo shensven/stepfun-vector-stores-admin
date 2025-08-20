@@ -10,7 +10,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useVectorsStore } from './vectors-store-provider'
+import { useVectorStores } from './vector-stores-provider'
 
 type DataTableRowActionsProps<TData> = {
   row: Row<TData>
@@ -21,7 +21,7 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const vectorStore = row.original as VectorStores
 
-  const { setOpen, setCurrentRow } = useVectorsStore()
+  const { setOpen, setCurrentRow } = useVectorStores()
 
   return (
     <DropdownMenu modal={false}>

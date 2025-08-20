@@ -5,7 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
-export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
+export const vectorStoresColumns: ColumnDef<VectorStores>[] = [
   {
     id: 'select',
     header: ({ table }) => (

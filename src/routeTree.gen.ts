@@ -25,7 +25,7 @@ import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-p
 import { Route as ClerkAuthenticatedRouteRouteImport } from './routes/clerk/_authenticated/route'
 import { Route as ClerkauthRouteRouteImport } from './routes/clerk/(auth)/route'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
-import { Route as AuthenticatedVectorsStoreIndexRouteImport } from './routes/_authenticated/vectors-store/index'
+import { Route as AuthenticatedVectorStoresIndexRouteImport } from './routes/_authenticated/vector-stores/index'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
 import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authenticated/tasks/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
@@ -119,10 +119,10 @@ const AuthenticatedSettingsRouteRoute =
     path: '/settings',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedVectorsStoreIndexRoute =
-  AuthenticatedVectorsStoreIndexRouteImport.update({
-    id: '/vectors-store/',
-    path: '/vectors-store/',
+const AuthenticatedVectorStoresIndexRoute =
+  AuthenticatedVectorStoresIndexRouteImport.update({
+    id: '/vector-stores/',
+    path: '/vector-stores/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexRouteImport.update({
@@ -233,7 +233,7 @@ export interface FileRoutesByFullPath {
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
-  '/vectors-store': typeof AuthenticatedVectorsStoreIndexRoute
+  '/vector-stores': typeof AuthenticatedVectorStoresIndexRoute
 }
 export interface FileRoutesByTo {
   '/clerk': typeof ClerkAuthenticatedRouteRouteWithChildren
@@ -262,7 +262,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
-  '/vectors-store': typeof AuthenticatedVectorsStoreIndexRoute
+  '/vector-stores': typeof AuthenticatedVectorStoresIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -296,7 +296,7 @@ export interface FileRoutesById {
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
-  '/_authenticated/vectors-store/': typeof AuthenticatedVectorsStoreIndexRoute
+  '/_authenticated/vector-stores/': typeof AuthenticatedVectorStoresIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -329,7 +329,7 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/tasks'
     | '/users'
-    | '/vectors-store'
+    | '/vector-stores'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clerk'
@@ -358,7 +358,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tasks'
     | '/users'
-    | '/vectors-store'
+    | '/vector-stores'
   id:
     | '__root__'
     | '/_authenticated'
@@ -391,7 +391,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/'
     | '/_authenticated/tasks/'
     | '/_authenticated/users/'
-    | '/_authenticated/vectors-store/'
+    | '/_authenticated/vector-stores/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -523,11 +523,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/vectors-store/': {
-      id: '/_authenticated/vectors-store/'
-      path: '/vectors-store'
-      fullPath: '/vectors-store'
-      preLoaderRoute: typeof AuthenticatedVectorsStoreIndexRouteImport
+    '/_authenticated/vector-stores/': {
+      id: '/_authenticated/vector-stores/'
+      path: '/vector-stores'
+      fullPath: '/vector-stores'
+      preLoaderRoute: typeof AuthenticatedVectorStoresIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/users/': {
@@ -663,7 +663,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
-  AuthenticatedVectorsStoreIndexRoute: typeof AuthenticatedVectorsStoreIndexRoute
+  AuthenticatedVectorStoresIndexRoute: typeof AuthenticatedVectorStoresIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -675,7 +675,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
-  AuthenticatedVectorsStoreIndexRoute: AuthenticatedVectorsStoreIndexRoute,
+  AuthenticatedVectorStoresIndexRoute: AuthenticatedVectorStoresIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

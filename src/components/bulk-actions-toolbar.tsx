@@ -40,7 +40,7 @@ export function BulkActionsToolbar<TData>({
   // Announce selection changes to screen readers
   useEffect(() => {
     if (selectedCount > 0) {
-      const message = `${selectedCount} ${entityName}${selectedCount > 1 ? 's' : ''} selected. Bulk actions toolbar is available.`
+      const message = `已选择 ${selectedCount} 个${entityName}。批量操作工具栏可用。`
       setAnnouncement(message)
 
       // Clear announcement after a delay
@@ -184,7 +184,7 @@ export function BulkActionsToolbar<TData>({
             <Badge
               variant='default'
               className='min-w-8 rounded-lg'
-              aria-label={`${selectedCount} selected`}
+              aria-label={`已选择 ${selectedCount} 项`}
             >
               {selectedCount}
             </Badge>{' '}
@@ -192,7 +192,7 @@ export function BulkActionsToolbar<TData>({
               {entityName}
               {selectedCount > 1 ? 's' : ''}
             </span>{' '}
-            selected
+            已选择
           </div>
 
           <Separator

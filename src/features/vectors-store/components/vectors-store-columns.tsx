@@ -42,6 +42,7 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     enableHiding: false,
   },
   {
+    id: 'name',
     accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='名称' />
@@ -57,6 +58,7 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     },
   },
   {
+    id: 'type',
     accessorKey: 'type',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='类型' />
@@ -74,6 +76,7 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     },
   },
   {
+    id: 'total_files',
     accessorKey: 'file_counts.total',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='总文件数' />
@@ -84,6 +87,7 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     },
   },
   {
+    id: 'completed_files',
     accessorKey: 'file_counts.completed',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='已完成' />
@@ -96,6 +100,7 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     },
   },
   {
+    id: 'in_progress_files',
     accessorKey: 'file_counts.in_progress',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='进行中' />
@@ -110,6 +115,7 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     },
   },
   {
+    id: 'failed_files',
     accessorKey: 'file_counts.failed',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='失败' />
@@ -126,6 +132,7 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     },
   },
   {
+    id: 'cancelled_files',
     accessorKey: 'file_counts.cancelled',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='已取消' />
@@ -142,6 +149,7 @@ export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
     },
   },
   {
+    id: 'created_at',
     accessorKey: 'created_at',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='创建时间' />

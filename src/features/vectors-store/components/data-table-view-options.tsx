@@ -17,6 +17,19 @@ type DataTableViewOptionsProps<TData> = {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+  // 列名映射
+  const columnNameMap: Record<string, string> = {
+    id: 'ID',
+    name: '名称',
+    type: '类型',
+    total_files: '总文件数',
+    completed_files: '已完成',
+    in_progress_files: '进行中',
+    failed_files: '失败',
+    cancelled_files: '已取消',
+    created_at: '创建时间',
+  }
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
@@ -26,11 +39,11 @@ export function DataTableViewOptions<TData>({
           className='ms-auto hidden h-8 lg:flex'
         >
           <MixerHorizontalIcon className='size-4' />
-          View
+          视图
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[150px]'>
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuLabel>切换列显示</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
@@ -46,7 +59,7 @@ export function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {columnNameMap[column.id] || column.id}
               </DropdownMenuCheckboxItem>
             )
           })}

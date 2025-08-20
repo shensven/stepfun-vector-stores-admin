@@ -44,10 +44,9 @@ export function DataTableRowActions<TData>({
         >
           编辑
         </DropdownMenuItem>
-        <DropdownMenuItem disabled>复制</DropdownMenuItem>
-        <DropdownMenuItem disabled>收藏</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
+          variant='destructive'
           onClick={() => {
             setCurrentRow(vectorStore)
             setOpen('delete')

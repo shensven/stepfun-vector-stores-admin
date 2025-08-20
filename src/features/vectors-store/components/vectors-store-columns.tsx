@@ -1,0 +1,151 @@
+import { type ColumnDef } from '@tanstack/react-table'
+import { Badge } from '@/components/ui/badge'
+import { Checkbox } from '@/components/ui/checkbox'
+import { type VectorStores } from '@/services/vectorStoresAPI'
+import { DataTableColumnHeader } from './data-table-column-header'
+import { DataTableRowActions } from './data-table-row-actions'
+
+export const vectorsStoreColumns: ColumnDef<VectorStores>[] = [
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && 'indeterminate')
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label='Select all'
+        className='translate-y-[2px]'
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label='Select row'
+        className='translate-y-[2px]'
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: 'id',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='ID' />
+    ),
+    cell: ({ row }) => <div className='w-[120px] font-mono text-xs'>{row.getValue('id')}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: 'name',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='名称' />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='flex space-x-2'>
+          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+            {row.getValue('name')}
+          </span>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'type',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='类型' />
+    ),
+    cell: ({ row }) => {
+      const type = row.getValue('type') as string
+      return (
+        <Badge variant='outline'>
+          {type === 'text' ? '文本' : type === 'image' ? '图片' : type}
+        </Badge>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
+    accessorKey: 'file_counts.total',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='总文件数' />
+    ),
+    cell: ({ row }) => {
+      const fileCounts = row.original.file_counts
+      return <div className='text-center'>{fileCounts.total}</div>
+    },
+  },
+  {
+    accessorKey: 'file_counts.completed',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='已完成' />
+    ),
+    cell: ({ row }) => {
+      const fileCounts = row.original.file_counts
+      return <div className='text-center text-green-600'>{fileCounts.completed}</div>
+    },
+  },
+  {
+    accessorKey: 'file_counts.in_progress',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='进行中' />
+    ),
+    cell: ({ row }) => {
+      const fileCounts = row.original.file_counts
+      return <div className='text-center text-blue-600'>{fileCounts.in_progress}</div>
+    },
+  },
+  {
+    accessorKey: 'file_counts.failed',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='失败' />
+    ),
+    cell: ({ row }) => {
+      const fileCounts = row.original.file_counts
+      return (
+        <div className={`text-center ${fileCounts.failed > 0 ? 'text-red-600' : 'text-gray-400'}`}>
+          {fileCounts.failed}
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'file_counts.cancelled',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='已取消' />
+    ),
+    cell: ({ row }) => {
+      const fileCounts = row.original.file_counts
+      return (
+        <div className={`text-center ${fileCounts.cancelled > 0 ? 'text-orange-600' : 'text-gray-400'}`}>
+          {fileCounts.cancelled}
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'created_at',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='创建时间' />
+    ),
+    cell: ({ row }) => {
+      const timestamp = row.getValue('created_at') as number
+      const date = new Date(timestamp * 1000)
+      return (
+        <div className='text-sm'>
+          {date.toLocaleDateString('zh-CN')} {date.toLocaleTimeString('zh-CN', { hour12: false })}
+        </div>
+      )
+    },
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => <DataTableRowActions row={row} />,
+  },
+]

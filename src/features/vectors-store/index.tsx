@@ -1,3 +1,4 @@
+import { useList } from '@/hooks/use-vectors-store'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -5,11 +6,12 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { TasksDialogs } from './components/tasks-dialogs'
 import { TasksProvider } from './components/tasks-provider'
-import { TasksTable } from './components/tasks-table'
 import { VectorsStorePrimaryButtons } from './components/vectors-store-primary-buttons'
-import { tasks } from './data/tasks'
+import { VectorsStoreTable } from './components/vectors-store-table'
 
 export function VectorsStore() {
+  const { data } = useList()
+
   return (
     <TasksProvider>
       <Header fixed>
@@ -29,7 +31,7 @@ export function VectorsStore() {
           <VectorsStorePrimaryButtons />
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-y-0 lg:space-x-12'>
-          <TasksTable data={tasks} />
+          <VectorsStoreTable data={data?.data || []} />
         </div>
       </Main>
 

@@ -12,6 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import type { VectorStores } from '@/services/vectorStoresAPI'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
 import {
   Table,
@@ -21,19 +22,18 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { type Task } from '../data/schema'
 import { DataTableBulkActions } from './data-table-bulk-actions'
 import { DataTablePagination } from './data-table-pagination'
 import { DataTableToolbar } from './data-table-toolbar'
-import { tasksColumns as columns } from './tasks-columns'
+import { vectorsStoreColumns as columns } from './vectors-store-columns'
 
 const route = getRouteApi('/_authenticated/vectors-store/')
 
 type DataTableProps = {
-  data: Task[]
+  data: VectorStores[]
 }
 
-export function TasksTable({ data }: DataTableProps) {
+export function VectorsStoreTable({ data }: DataTableProps) {
   // Local UI-only states
   const [rowSelection, setRowSelection] = useState({})
   const [sorting, setSorting] = useState<SortingState>([])
@@ -58,10 +58,7 @@ export function TasksTable({ data }: DataTableProps) {
     navigate: route.useNavigate(),
     pagination: { defaultPage: 1, defaultPageSize: 10 },
     globalFilter: { enabled: true, key: 'filter' },
-    columnFilters: [
-      { columnId: 'status', searchKey: 'status', type: 'array' },
-      { columnId: 'priority', searchKey: 'priority', type: 'array' },
-    ],
+    columnFilters: [{ columnId: 'type', searchKey: 'type', type: 'array' }],
   })
 
   const table = useReactTable({
@@ -81,10 +78,10 @@ export function TasksTable({ data }: DataTableProps) {
     onColumnVisibilityChange: setColumnVisibility,
     globalFilterFn: (row, _columnId, filterValue) => {
       const id = String(row.getValue('id')).toLowerCase()
-      const title = String(row.getValue('title')).toLowerCase()
+      const name = String(row.getValue('name')).toLowerCase()
       const searchValue = String(filterValue).toLowerCase()
 
-      return id.includes(searchValue) || title.includes(searchValue)
+      return id.includes(searchValue) || name.includes(searchValue)
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

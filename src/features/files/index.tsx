@@ -26,13 +26,13 @@ export function Files() {
       <Main>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2 gap-x-4'>
           <div>
-            <h2 className='text-2xl font-bold tracking-tight'>文件管理</h2>
+            <h2 className='text-2xl font-bold tracking-tight'>文件列表</h2>
             <p className='text-muted-foreground'>管理和浏览您的文件</p>
           </div>
           <FilesPrimaryButtons />
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-y-0 lg:space-x-12'>
-          <FilesTable data={data?.data || []} />
+          <FilesTable data={data?.data ?? []} />
         </div>
       </Main>
 

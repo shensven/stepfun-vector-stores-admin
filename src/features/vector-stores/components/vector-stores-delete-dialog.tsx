@@ -41,6 +41,7 @@ export function VectorStoresDeleteDialog() {
       className='max-w-md'
       title={`删除知识库 ${currentRow.name}`}
       desc='此操作无法撤销！'
+      cancelBtnText='取消'
       confirmText={deleteMutation.isPending ? '删除中...' : '删除'}
       disabled={deleteMutation.isPending}
     />

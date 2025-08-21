@@ -1,3 +1,4 @@
+import { Loader2Icon } from 'lucide-react'
 import { useDelete } from '@/hooks/use-files'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 import { useFiles } from './files-provider'
@@ -41,7 +42,13 @@ export function FilesDeleteDialog() {
       className='max-w-md'
       title={`删除文件 ${currentRow.filename}`}
       desc='此操作无法撤销！'
-      confirmText={deleteMutation.isPending ? '删除中...' : '删除'}
+      cancelBtnText='取消'
+      confirmText={
+        <>
+          {deleteMutation.isPending && <Loader2Icon className='animate-spin' />}
+          删除
+        </>
+      }
       disabled={deleteMutation.isPending}
     />
   )

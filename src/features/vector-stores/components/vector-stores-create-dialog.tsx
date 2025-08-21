@@ -3,6 +3,7 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader2Icon } from 'lucide-react'
 import { useCreate } from '@/hooks/use-vector-stores'
 import { Button } from '@/components/ui/button'
 import {
@@ -139,7 +140,10 @@ export function VectorStoresCreateDialog() {
             type='submit'
             disabled={createMutation.isPending}
           >
-            {createMutation.isPending ? '创建中...' : '保存'}
+            {createMutation.isPending && (
+              <Loader2Icon className='animate-spin' />
+            )}
+            创建
           </Button>
         </DialogFooter>
       </DialogContent>

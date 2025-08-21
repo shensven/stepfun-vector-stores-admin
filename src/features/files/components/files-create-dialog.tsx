@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type StepfunFileCreateParams } from '@/services/filesAPI'
+import { Loader2Icon } from 'lucide-react'
 import { useCreate } from '@/hooks/use-files'
 import { Button } from '@/components/ui/button'
 import {
@@ -122,7 +123,7 @@ export function FilesCreateDialog() {
               name='purpose'
               render={({ field }) => (
                 <FormItem className='space-y-2'>
-                  <FormLabel>文件上传的意图</FormLabel>
+                  <FormLabel>用途</FormLabel>
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
@@ -240,7 +241,10 @@ export function FilesCreateDialog() {
             type='submit'
             disabled={createMutation.isPending}
           >
-            {createMutation.isPending ? '上传中...' : '上传'}
+            {createMutation.isPending && (
+              <Loader2Icon className='animate-spin' />
+            )}
+            上传
           </Button>
         </DialogFooter>
       </DialogContent>

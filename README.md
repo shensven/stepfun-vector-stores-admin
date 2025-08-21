@@ -1,5 +1,7 @@
 # 阶跃星辰知识库管理系统
 
+[![Continuous Integration](https://github.com/tangledup-ai/stepfun-vector-stores-admin/actions/workflows/ci.yml/badge.svg)](https://github.com/tangledup-ai/stepfun-vector-stores-admin/actions/workflows/ci.yml)
+
 Admin Dashboard UI crafted with Shadcn and Vite. Built with responsiveness and accessibility in mind.
 
 ![alt text](public/images/shadcn-admin.png)

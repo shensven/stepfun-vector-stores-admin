@@ -1,6 +1,6 @@
 # 阶跃星辰知识库管理系统
 
-[![Continuous Integration](https://github.com/tangledup-ai/stepfun-vector-stores-admin/actions/workflows/ci.yml/badge.svg)](https://github.com/tangledup-ai/stepfun-vector-stores-admin/actions/workflows/ci.yml)
+[![Test](https://github.com/tangledup-ai/stepfun-vector-stores-admin/actions/workflows/test.yml/badge.svg)](https://github.com/tangledup-ai/stepfun-vector-stores-admin/actions/workflows/test.yml)
 
 This project is built on [Shadcn Admin Dashboard](https://github.com/satnaing/shadcn-admin)
 

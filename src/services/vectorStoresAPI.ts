@@ -70,6 +70,13 @@ export interface ResponseAddFiles {
 export class VectorStoresApiService {
   private static basePath = '/vector_stores'
 
+  // 操作知识库
+
+  /**
+   * 查看知识库列表
+   * @param ParamsListVectorStore 参数
+   * @returns 知识库列表
+   */
   static async listVectorStores(params?: ParamsListVectorStore) {
     const { data } = await axiosInstance.get<PaginatedResponse<VectorStore>>(
       this.basePath,
@@ -78,6 +85,11 @@ export class VectorStoresApiService {
     return data
   }
 
+  /**
+   * 删除知识库
+   * @param vectorStoreId 知识库 ID
+   * @returns 删除结果
+   */
   static async deleteVectorStore(vectorStoreId: string) {
     const { data } = await axiosInstance.delete<
       ResponseDelete<'vector_store.deleted'>
@@ -85,6 +97,11 @@ export class VectorStoresApiService {
     return data
   }
 
+  /**
+   * 创建知识库
+   * @param ParamsCreateVectorStore 参数
+   * @returns 创建结果
+   */
   static async createVectorStore(params: ParamsCreateVectorStore) {
     const { data } = await axiosInstance.post<ResponseCreateVectorStore>(
       this.basePath,
@@ -93,6 +110,23 @@ export class VectorStoresApiService {
     return data
   }
 
+  /**
+   * 获取知识库详情
+   * @param vectorStoreId 知识库 ID
+   * @returns 知识库详情
+   */
+  static async queryVectorStore(vectorStoreId: string) {
+    const { data } = await axiosInstance.get<VectorStore>(
+      `${this.basePath}/${vectorStoreId}`
+    )
+    return data
+  }
+
+  /**
+   * 查看知识库中的文件列表
+   * @param vectorStoreId 知识库 ID
+   * @returns 文件列表
+   */
   static async listFiles(vectorStoreId: string) {
     const { data } = await axiosInstance.get<
       PaginatedResponse<VectorStoreFile>
@@ -100,6 +134,12 @@ export class VectorStoresApiService {
     return data
   }
 
+  /**
+   * 将文件从知识库中移除
+   * @param vectorStoreId 知识库 ID
+   * @param fileId 文件 ID
+   * @returns 移除结果
+   */
   static async removeFile(vectorStoreId: string, fileId: string) {
     const { data } = await axiosInstance.delete<
       ResponseDelete<'vector_store.file.deleted'>
@@ -107,6 +147,11 @@ export class VectorStoresApiService {
     return data
   }
 
+  /**
+   * 将文件添加到知识库
+   * @param ParamsAddFiles 参数
+   * @returns 添加结果
+   */
   static async addFiles(params: ParamsAddFiles) {
     const { vectorStoreId, files } = params
     const { data } = await axiosInstance.post<ResponseAddFiles>(

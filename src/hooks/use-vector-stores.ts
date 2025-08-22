@@ -39,3 +39,10 @@ export function useDelete() {
     },
   })
 }
+
+export function useListFiles(vectorStoreId: string) {
+  return useQuery({
+    queryKey: ['vector_stores_files', vectorStoreId],
+    queryFn: () => VectorStoresApiService.listFiles(vectorStoreId),
+  })
+}

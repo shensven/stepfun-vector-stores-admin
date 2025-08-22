@@ -6,15 +6,16 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { VectorStoresCreateDialog } from './components/vector-stores-create-dialog'
 import { VectorStoresDeleteDialog } from './components/vector-stores-delete-dialog'
+import { VectorStoresFilesDrawer } from './components/vector-stores-mutate-drawer'
 import { VectorStoresPrimaryButtons } from './components/vector-stores-primary-buttons'
 import { VectorStoresProvider } from './components/vector-stores-provider'
 import { VectorStoresTable } from './components/vector-stores-table'
 
-export function VectorStores() {
+function VectorStoresContent() {
   const { data } = useList()
 
   return (
-    <VectorStoresProvider>
+    <>
       <Header fixed>
         <div className='ms-auto flex items-center space-x-4'>
           <ThemeSwitch />
@@ -38,6 +39,15 @@ export function VectorStores() {
 
       <VectorStoresCreateDialog />
       <VectorStoresDeleteDialog />
+      <VectorStoresFilesDrawer />
+    </>
+  )
+}
+
+export function VectorStores() {
+  return (
+    <VectorStoresProvider>
+      <VectorStoresContent />
     </VectorStoresProvider>
   )
 }

@@ -39,6 +39,18 @@ export interface VectorStoresCreateResponse {
   name: string
 }
 
+// Vector Store File 对象
+export interface VectorStoreFile {
+  id: string
+  object: string
+  created_at: number
+  vector_store_id: string
+  metadata: {
+    description: string
+    file_name: string
+  }
+}
+
 export class VectorStoresApiService {
   private static basePath = '/vector_stores'
 
@@ -62,6 +74,13 @@ export class VectorStoresApiService {
       this.basePath,
       params
     )
+    return data
+  }
+
+  static async listFiles(vectorStoreId: string) {
+    const { data } = await axiosInstance.get<
+      PaginatedResponse<VectorStoreFile>
+    >(`${this.basePath}/${vectorStoreId}/files`)
     return data
   }
 }

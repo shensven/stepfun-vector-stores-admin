@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { type VectorStores } from '@/services/vectorStoresAPI'
 import useDialogState from '@/hooks/use-dialog-state'
 
-type VectorStoresDialogType = 'create' | 'delete'
+type VectorStoresDialogType = 'create' | 'delete' | 'list-files'
 
 type VectorStoresContextType = {
   open: VectorStoresDialogType | null

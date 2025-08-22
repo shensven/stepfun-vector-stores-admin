@@ -17,6 +17,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -82,15 +83,15 @@ export function VectorStoresCreateDialog() {
               render={({ field }) => (
                 <FormItem className='grid grid-cols-6 items-center space-y-0 gap-x-4 gap-y-1'>
                   <FormLabel className='col-span-2 text-end'>名称</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder='必填'
-                      className='col-span-4'
-                      autoComplete='off'
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className='col-span-4 col-start-3' />
+                  <div className='col-span-4 flex flex-col gap-2'>
+                    <FormControl>
+                      <Input placeholder='必填' autoComplete='off' {...field} />
+                    </FormControl>
+                    <FormMessage className='mx-1 text-xs' />
+                    <FormDescription className='mx-1 text-xs'>
+                      目前仅支持英文、数字和下划线，且不支持以下划线开头
+                    </FormDescription>
+                  </div>
                 </FormItem>
               )}
             />

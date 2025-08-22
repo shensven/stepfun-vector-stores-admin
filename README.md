@@ -4,7 +4,7 @@
 
 This project is built on [Shadcn Admin Dashboard](https://github.com/satnaing/shadcn-admin)
 
-![alt text](public/images/Xnip2025-08-22_21-56-02.png)
+![alt text](public/images/Xnip2025-08-22_22-33-10.png)
 
 ## Run Locally
 

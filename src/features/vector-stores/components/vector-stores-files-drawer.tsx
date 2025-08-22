@@ -4,7 +4,7 @@ import { useList as useFilesList } from '@/hooks/use-files'
 import {
   useListFiles,
   useRemoveFile,
-  useAddFiles,
+  useAddFile,
 } from '@/hooks/use-vector-stores'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -51,20 +51,16 @@ export function VectorStoresFilesDrawer() {
   const removeFileMutation = useRemoveFile()
 
   // 添加文件到知识库
-  const addFilesMutation = useAddFiles()
+  const addFileMutation = useAddFile()
 
   const includedIdSet = new Set(includedFiles.map((f) => f.id))
 
   const handleRemoveFile = async (fileId: string) => {
     if (!currentRow?.id) return
-    try {
-      await removeFileMutation.mutateAsync({
-        vectorStoreId: currentRow.id,
-        fileId: fileId,
-      })
-    } catch (_error) {
-      // 错误已在 hook 中处理
-    }
+    await removeFileMutation.mutateAsync({
+      vectorStoreId: currentRow.id,
+      fileId: fileId,
+    })
   }
 
   const handleAddFile = async (fileId: string) => {
@@ -80,14 +76,10 @@ export function VectorStoresFilesDrawer() {
     const file = allFiles.find((f) => f.id === fileId)
     const description = file?.filename || '未命名文件'
 
-    try {
-      await addFilesMutation.mutateAsync({
-        vectorStoreId: currentRow.id,
-        files: [{ file_id: fileId, description }],
-      })
-    } catch (_error) {
-      // 错误已在 hook 中处理
-    }
+    await addFileMutation.mutateAsync({
+      vectorStoreId: currentRow.id,
+      file: { id: fileId, description },
+    })
   }
 
   return (
@@ -102,7 +94,7 @@ export function VectorStoresFilesDrawer() {
         }
       }}
     >
-      <SheetContent className='flex w-full max-w-none flex-col sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-4xl 2xl:max-w-4xl'>
+      <SheetContent className='sm:max-w-2lg flex w-full max-w-none flex-col md:max-w-4xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl'>
         <SheetHeader className='text-start'>
           <SheetTitle className='flex items-center gap-2'>文件列表</SheetTitle>
           <SheetDescription>查看哪些文件，被添加到了知识库</SheetDescription>
@@ -134,10 +126,8 @@ export function VectorStoresFilesDrawer() {
                     removeFileMutation.isPending &&
                     removeFileMutation.variables?.fileId === file.id
                   const isAdding =
-                    addFilesMutation.isPending &&
-                    addFilesMutation.variables?.files.some(
-                      (f) => f.file_id === file.id
-                    )
+                    addFileMutation.isPending &&
+                    addFileMutation.variables?.file?.id === file.id
 
                   return (
                     <TableRow
@@ -172,10 +162,10 @@ export function VectorStoresFilesDrawer() {
                             disabled={included || isAdding || isRemoving}
                           >
                             {isAdding && (
-                              <Loader2Icon className='mr-1 h-3 w-3 animate-spin' />
+                              <Loader2Icon className='h-3 w-3 animate-spin' />
                             )}
                             {!isAdding && (
-                              <PlusCircleIcon className='mr-1 h-3 w-3' />
+                              <PlusCircleIcon className='h-3 w-3' />
                             )}
                             添加
                           </Button>
@@ -187,11 +177,9 @@ export function VectorStoresFilesDrawer() {
                             disabled={!included || isRemoving || isAdding}
                           >
                             {isRemoving && (
-                              <Loader2Icon className='mr-1 h-3 w-3 animate-spin' />
+                              <Loader2Icon className='h-3 w-3 animate-spin' />
                             )}
-                            {!isRemoving && (
-                              <Trash2Icon className='mr-1 h-3 w-3' />
-                            )}
+                            {!isRemoving && <Trash2Icon className='h-3 w-3' />}
                             移除
                           </Button>
                         </div>

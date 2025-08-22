@@ -53,12 +53,17 @@ export interface VectorStoreFile {
   }
 }
 
+export interface ParamsRemoveFile {
+  vectorStoreId: string
+  fileId: string
+}
+export interface ParamsAddFile {
+  vectorStoreId: string
+  file: { id: string; description: string }
+}
 export interface ParamsAddFiles {
   vectorStoreId: string
-  files: Array<{
-    file_id: string
-    description: string
-  }>
+  files: Array<{ file_id: string; description: string }>
 }
 export interface ResponseAddFiles {
   files: Array<{
@@ -140,7 +145,8 @@ export class VectorStoresApiService {
    * @param fileId 文件 ID
    * @returns 移除结果
    */
-  static async removeFile(vectorStoreId: string, fileId: string) {
+  static async removeFile(params: ParamsRemoveFile) {
+    const { vectorStoreId, fileId } = params
     const { data } = await axiosInstance.delete<
       ResponseDelete<'vector_store.file.deleted'>
     >(`${this.basePath}/${vectorStoreId}/files/${fileId}`)

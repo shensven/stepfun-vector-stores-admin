@@ -115,7 +115,7 @@ export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
     cell: ({ row }) => {
       const fileCounts = row.original.file_counts
       return (
-        <div className='text-center text-blue-600'>
+        <div className='text-center text-amber-600'>
           {fileCounts.in_progress}
         </div>
       )

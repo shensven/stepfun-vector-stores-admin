@@ -3,7 +3,7 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Loader2Icon } from 'lucide-react'
+import { Loader2Icon, PlaneTakeoff } from 'lucide-react'
 import { useCreateVectorStore } from '@/hooks/use-vector-stores'
 import { Button } from '@/components/ui/button'
 import {
@@ -141,6 +141,7 @@ export function VectorStoresCreateDialog() {
             type='submit'
             disabled={createMutation.isPending}
           >
+            {!createMutation.isPending && <PlaneTakeoff size={18} />}
             {createMutation.isPending && (
               <Loader2Icon className='animate-spin' />
             )}

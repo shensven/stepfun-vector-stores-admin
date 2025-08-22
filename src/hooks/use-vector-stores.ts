@@ -1,10 +1,17 @@
+import type { AxiosError } from 'axios'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  VectorStoresApiService,
-  type ParamsListVectorStore,
-  type ParamsCreateVectorStore,
-  type ParamsAddFiles,
+import type { StepfunError } from '@/services/api'
+import type {
+  ParamsListVectorStore,
+  ParamsCreateVectorStore,
+  ParamsAddFiles,
+  ResponseCreateVectorStore,
+  ResponseDelete,
+  ResponseAddFiles,
+  ParamsAddFile,
+  ParamsRemoveFile,
 } from '@/services/vectorStoresAPI'
+import { VectorStoresApiService } from '@/services/vectorStoresAPI'
 import { toast } from 'sonner'
 
 export function useListVectorStores(params?: ParamsListVectorStore) {
@@ -18,12 +25,20 @@ export function useListVectorStores(params?: ParamsListVectorStore) {
 export function useCreateVectorStore() {
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: (params: ParamsCreateVectorStore) =>
-      VectorStoresApiService.createVectorStore(params),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['vector_stores'] })
-      toast.success(`知识库 "${data.name}" 已成功创建`)
+  return useMutation<
+    ResponseCreateVectorStore,
+    AxiosError<StepfunError>,
+    ParamsCreateVectorStore
+  >({
+    mutationFn: (params: ParamsCreateVectorStore) => {
+      return VectorStoresApiService.createVectorStore(params)
+    },
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({ queryKey: ['vector_stores'] })
+      toast.success(`已创建 ${data.name}`)
+    },
+    onError: (error) => {
+      toast.error(error.response?.data.error.message, { richColors: true })
     },
   })
 }
@@ -31,12 +46,20 @@ export function useCreateVectorStore() {
 export function useDeleteVectorStore() {
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: (vectorStoreId: string) =>
-      VectorStoresApiService.deleteVectorStore(vectorStoreId),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['vector_stores'] })
-      toast.success(`知识库 "${data.id}" 已成功删除`)
+  return useMutation<
+    ResponseDelete<'vector_store.deleted'>,
+    AxiosError<StepfunError>,
+    string
+  >({
+    mutationFn: (vectorStoreId: string) => {
+      return VectorStoresApiService.deleteVectorStore(vectorStoreId)
+    },
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({ queryKey: ['vector_stores'] })
+      toast.success(`已删除 ${data.id}`)
+    },
+    onError: (error) => {
+      toast.error(error.response?.data.error.message, { richColors: true })
     },
   })
 }
@@ -51,30 +74,67 @@ export function useListFiles(vectorStoreId: string) {
 export function useRemoveFile() {
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: ({
-      vectorStoreId,
-      fileId,
-    }: {
-      vectorStoreId: string
-      fileId: string
-    }) => VectorStoresApiService.removeFile(vectorStoreId, fileId),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['vector_stores_files'] })
-      toast.success(`文件 "${data.id}" 已成功删除`)
+  return useMutation<
+    ResponseDelete<'vector_store.file.deleted'>,
+    AxiosError<StepfunError>,
+    ParamsRemoveFile
+  >({
+    mutationFn: (params: ParamsRemoveFile) => {
+      return VectorStoresApiService.removeFile(params)
+    },
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({ queryKey: ['vector_stores_files'] })
+      toast.success(`已移除 ${data.id}`)
+    },
+    onError: (error) => {
+      toast.error(error.response?.data.error.message, { richColors: true })
     },
   })
+}
+
+export function useAddFile() {
+  const queryClient = useQueryClient()
+
+  return useMutation<ResponseAddFiles, AxiosError<StepfunError>, ParamsAddFile>(
+    {
+      mutationFn: (params: ParamsAddFile) => {
+        return VectorStoresApiService.addFiles({
+          vectorStoreId: params.vectorStoreId,
+          files: [
+            { file_id: params.file.id, description: params.file.description },
+          ],
+        })
+      },
+      onSuccess: async (data) => {
+        await queryClient.invalidateQueries({
+          queryKey: ['vector_stores_files'],
+        })
+        toast.success(`已添加 ${data.files.at(0)?.metadata.description}`)
+      },
+      onError: (error) => {
+        toast.error(error.response?.data.error.message, { richColors: true })
+      },
+    }
+  )
 }
 
 export function useAddFiles() {
   const queryClient = useQueryClient()
 
-  return useMutation({
-    mutationFn: (params: ParamsAddFiles) =>
-      VectorStoresApiService.addFiles(params),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['vector_stores_files'] })
-      toast.success(`${data.files.length} 个文件已成功添加到知识库`)
+  return useMutation<
+    ResponseAddFiles,
+    AxiosError<StepfunError>,
+    ParamsAddFiles
+  >({
+    mutationFn: (params: ParamsAddFiles) => {
+      return VectorStoresApiService.addFiles(params)
+    },
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({ queryKey: ['vector_stores_files'] })
+      toast.success(`已添加 ${data.files.length} 个文件`)
+    },
+    onError: (error) => {
+      toast.error(error.response?.data.error.message, { richColors: true })
     },
   })
 }

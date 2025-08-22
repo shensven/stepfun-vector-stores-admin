@@ -1,3 +1,4 @@
+import { Loader2Icon, Trash2 } from 'lucide-react'
 import { useDeleteVectorStore } from '@/hooks/use-vector-stores'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 import { useVectorStores } from './vector-stores-provider'
@@ -42,7 +43,13 @@ export function VectorStoresDeleteDialog() {
       title={`删除知识库 ${currentRow.name}`}
       desc='此操作无法撤销！'
       cancelBtnText='取消'
-      confirmText={deleteMutation.isPending ? '删除中...' : '删除'}
+      confirmText={
+        <>
+          {!deleteMutation.isPending && <Trash2 />}
+          {deleteMutation.isPending && <Loader2Icon className='animate-spin' />}
+          删除
+        </>
+      }
       disabled={deleteMutation.isPending}
     />
   )

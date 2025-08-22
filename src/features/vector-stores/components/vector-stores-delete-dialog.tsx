@@ -9,17 +9,12 @@ export function VectorStoresDeleteDialog() {
 
   const handleDelete = async () => {
     if (!currentRow) return
-
-    try {
-      await deleteMutation.mutateAsync(currentRow.id)
-      // 删除成功后关闭对话框并清理状态
-      setOpen(null)
-      setTimeout(() => {
-        setCurrentRow(null)
-      }, 300)
-    } catch (_error) {
-      // 错误已在 hook 中处理，这里不需要额外处理
-    }
+    await deleteMutation.mutateAsync(currentRow.id)
+    // 删除成功后关闭对话框并清理状态
+    setOpen(null)
+    setTimeout(() => {
+      setCurrentRow(null)
+    }, 300)
   }
 
   if (!currentRow) return null

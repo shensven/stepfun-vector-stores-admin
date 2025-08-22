@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type StepfunFileCreateParams } from '@/services/filesAPI'
-import { Loader2Icon } from 'lucide-react'
+import { Loader2Icon, PlaneTakeoff } from 'lucide-react'
 import { useCreate } from '@/hooks/use-files'
 import { Button } from '@/components/ui/button'
 import {
@@ -241,6 +241,7 @@ export function FilesCreateDialog() {
             type='submit'
             disabled={createMutation.isPending}
           >
+            {!createMutation.isPending && <PlaneTakeoff />}
             {createMutation.isPending && (
               <Loader2Icon className='animate-spin' />
             )}

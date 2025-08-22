@@ -141,7 +141,7 @@ export function VectorStoresCreateDialog() {
             type='submit'
             disabled={createMutation.isPending}
           >
-            {!createMutation.isPending && <PlaneTakeoff size={18} />}
+            {!createMutation.isPending && <PlaneTakeoff />}
             {createMutation.isPending && (
               <Loader2Icon className='animate-spin' />
             )}

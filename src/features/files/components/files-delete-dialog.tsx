@@ -1,4 +1,4 @@
-import { Loader2Icon } from 'lucide-react'
+import { Loader2Icon, Trash2Icon } from 'lucide-react'
 import { useDelete } from '@/hooks/use-files'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 import { useFiles } from './files-provider'
@@ -9,17 +9,12 @@ export function FilesDeleteDialog() {
 
   const handleDelete = async () => {
     if (!currentRow) return
-
-    try {
-      await deleteMutation.mutateAsync(currentRow.id)
-      // 删除成功后关闭对话框并清理状态
-      setOpen(null)
-      setTimeout(() => {
-        setCurrentRow(null)
-      }, 300)
-    } catch (_error) {
-      // 错误已在 hook 中处理，这里不需要额外处理
-    }
+    await deleteMutation.mutateAsync(currentRow.id)
+    // 删除成功后关闭对话框并清理状态
+    setOpen(null)
+    setTimeout(() => {
+      setCurrentRow(null)
+    }, 300)
   }
 
   if (!currentRow) return null
@@ -45,6 +40,7 @@ export function FilesDeleteDialog() {
       cancelBtnText='取消'
       confirmText={
         <>
+          {!deleteMutation.isPending && <Trash2Icon />}
           {deleteMutation.isPending && <Loader2Icon className='animate-spin' />}
           删除
         </>

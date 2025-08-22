@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import type { VectorStores } from '@/services/vectorStoresAPI'
+import type { VectorStore } from '@/services/vectorStoresAPI'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
 import {
   Table,
@@ -30,7 +30,7 @@ import { vectorStoresColumns as columns } from './vector-stores-columns'
 const route = getRouteApi('/_authenticated/vector-stores/')
 
 type DataTableProps = {
-  data: VectorStores[]
+  data: VectorStore[]
 }
 
 export function VectorStoresTable({ data }: DataTableProps) {

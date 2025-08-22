@@ -1,6 +1,6 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { type Row } from '@tanstack/react-table'
-import { type VectorStores } from '@/services/vectorStoresAPI'
+import { type VectorStore } from '@/services/vectorStoresAPI'
 import { FileText, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,7 +20,7 @@ type DataTableRowActionsProps<TData> = {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const vectorStore = row.original as VectorStores
+  const vectorStore = row.original as VectorStore
 
   const { setOpen, setCurrentRow } = useVectorStores()
 

@@ -1,14 +1,8 @@
 import axiosInstance from './api'
 import type { PaginatedResponse } from './api'
 
-export interface VectorStoresListParams {
-  limit?: number
-  order?: 'asc' | 'desc'
-  before?: string
-  after?: string
-}
-
-export interface VectorStores {
+// Vector Store 对象
+export interface VectorStore {
   id: string
   object: 'vector_store'
   created_at: number
@@ -23,18 +17,25 @@ export interface VectorStores {
   }
 }
 
-export interface VectorStoresDeleteResponse {
+export interface ParamsListVectorStore {
+  limit?: number
+  order?: 'asc' | 'desc'
+  before?: string
+  after?: string
+}
+
+export interface ParamsCreateVectorStore {
+  name: string
+  type: 'text' | 'image'
+}
+
+export interface ResponseDeleteVectorStore {
   id: string
   object: 'vector_store'
   deleted: boolean
 }
 
-export interface VectorStoresCreateParams {
-  name: string
-  type: 'text' | 'image'
-}
-
-export interface VectorStoresCreateResponse {
+export interface ResponseCreateVectorStore {
   id: string
   name: string
 }
@@ -54,8 +55,8 @@ export interface VectorStoreFile {
 export class VectorStoresApiService {
   private static basePath = '/vector_stores'
 
-  static async getList(params?: VectorStoresListParams) {
-    const { data } = await axiosInstance.get<PaginatedResponse<VectorStores>>(
+  static async getList(params?: ParamsListVectorStore) {
+    const { data } = await axiosInstance.get<PaginatedResponse<VectorStore>>(
       this.basePath,
       { params }
     )
@@ -63,14 +64,14 @@ export class VectorStoresApiService {
   }
 
   static async deleteItem(vectorStoreId: string) {
-    const { data } = await axiosInstance.delete<VectorStoresDeleteResponse>(
+    const { data } = await axiosInstance.delete<ResponseDeleteVectorStore>(
       `${this.basePath}/${vectorStoreId}`
     )
     return data
   }
 
-  static async createItem(params: VectorStoresCreateParams) {
-    const { data } = await axiosInstance.post<VectorStoresCreateResponse>(
+  static async createItem(params: ParamsCreateVectorStore) {
+    const { data } = await axiosInstance.post<ResponseCreateVectorStore>(
       this.basePath,
       params
     )

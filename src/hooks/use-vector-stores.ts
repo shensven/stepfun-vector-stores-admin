@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   VectorStoresApiService,
-  type VectorStoresListParams,
-  type VectorStoresCreateParams,
+  type ParamsListVectorStore,
+  type ParamsCreateVectorStore,
 } from '@/services/vectorStoresAPI'
 import { toast } from 'sonner'
 
-export function useList(params?: VectorStoresListParams) {
+export function useList(params?: ParamsListVectorStore) {
   return useQuery({
     queryKey: ['vector_stores', params],
     queryFn: () => VectorStoresApiService.getList(params),
@@ -18,7 +18,7 @@ export function useCreate() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (params: VectorStoresCreateParams) =>
+    mutationFn: (params: ParamsCreateVectorStore) =>
       VectorStoresApiService.createItem(params),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['vector_stores'] })

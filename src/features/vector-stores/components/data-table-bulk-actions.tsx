@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { type Table } from '@tanstack/react-table'
-import type { VectorStores } from '@/services/vectorStoresAPI'
+import type { VectorStore } from '@/services/vectorStoresAPI'
 import { Trash2, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { sleep } from '@/utils/sleep'
@@ -24,7 +24,7 @@ export function DataTableBulkActions<TData>({
 
   const handleBulkExport = () => {
     const selectedVectorStores = selectedRows.map(
-      (row) => row.original as VectorStores
+      (row) => row.original as VectorStore
     )
     toast.promise(sleep(2000), {
       loading: '导出知识库...',

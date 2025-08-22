@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { type VectorStores } from '@/services/vectorStoresAPI'
+import { type VectorStore } from '@/services/vectorStoresAPI'
 import useDialogState from '@/hooks/use-dialog-state'
 
 type VectorStoresDialogType = 'create' | 'delete' | 'list-files'
@@ -7,8 +7,8 @@ type VectorStoresDialogType = 'create' | 'delete' | 'list-files'
 type VectorStoresContextType = {
   open: VectorStoresDialogType | null
   setOpen: (str: VectorStoresDialogType | null) => void
-  currentRow: VectorStores | null
-  setCurrentRow: React.Dispatch<React.SetStateAction<VectorStores | null>>
+  currentRow: VectorStore | null
+  setCurrentRow: React.Dispatch<React.SetStateAction<VectorStore | null>>
 }
 
 const VectorStoresContext = React.createContext<VectorStoresContextType | null>(
@@ -21,7 +21,7 @@ export function VectorStoresProvider({
   children: React.ReactNode
 }) {
   const [open, setOpen] = useDialogState<VectorStoresDialogType>(null)
-  const [currentRow, setCurrentRow] = useState<VectorStores | null>(null)
+  const [currentRow, setCurrentRow] = useState<VectorStore | null>(null)
 
   return (
     <VectorStoresContext value={{ open, setOpen, currentRow, setCurrentRow }}>

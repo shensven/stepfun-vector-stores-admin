@@ -1,11 +1,11 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { type VectorStores } from '@/services/vectorStoresAPI'
+import { type VectorStore } from '@/services/vectorStoresAPI'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
-export const vectorStoresColumns: ColumnDef<VectorStores>[] = [
+export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
   {
     id: 'select',
     header: ({ table }) => (

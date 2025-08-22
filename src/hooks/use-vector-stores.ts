@@ -7,20 +7,20 @@ import {
 } from '@/services/vectorStoresAPI'
 import { toast } from 'sonner'
 
-export function useList(params?: ParamsListVectorStore) {
+export function useListVectorStores(params?: ParamsListVectorStore) {
   return useQuery({
     queryKey: ['vector_stores', params],
-    queryFn: () => VectorStoresApiService.getList(params),
+    queryFn: () => VectorStoresApiService.listVectorStores(params),
     staleTime: 5 * 60 * 1000, // 5分钟内数据保持新鲜
   })
 }
 
-export function useCreate() {
+export function useCreateVectorStore() {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (params: ParamsCreateVectorStore) =>
-      VectorStoresApiService.createItem(params),
+      VectorStoresApiService.createVectorStore(params),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['vector_stores'] })
       toast.success(`知识库 "${data.name}" 已成功创建`)
@@ -28,12 +28,12 @@ export function useCreate() {
   })
 }
 
-export function useDelete() {
+export function useDeleteVectorStore() {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (vectorStoreId: string) =>
-      VectorStoresApiService.deleteItem(vectorStoreId),
+      VectorStoresApiService.deleteVectorStore(vectorStoreId),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['vector_stores'] })
       toast.success(`知识库 "${data.id}" 已成功删除`)

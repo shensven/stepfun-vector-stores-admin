@@ -1,10 +1,10 @@
-import { useDelete } from '@/hooks/use-vector-stores'
+import { useDeleteVectorStore } from '@/hooks/use-vector-stores'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 import { useVectorStores } from './vector-stores-provider'
 
 export function VectorStoresDeleteDialog() {
   const { open, setOpen, currentRow, setCurrentRow } = useVectorStores()
-  const deleteMutation = useDelete()
+  const deleteMutation = useDeleteVectorStore()
 
   const handleDelete = async () => {
     if (!currentRow) return

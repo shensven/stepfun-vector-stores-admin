@@ -1,4 +1,4 @@
-import { useList } from '@/hooks/use-vector-stores'
+import { useListVectorStores } from '@/hooks/use-vector-stores'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -12,7 +12,7 @@ import { VectorStoresProvider } from './components/vector-stores-provider'
 import { VectorStoresTable } from './components/vector-stores-table'
 
 function VectorStoresContent() {
-  const { data } = useList()
+  const { data } = useListVectorStores()
 
   return (
     <>

@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2Icon } from 'lucide-react'
-import { useCreate } from '@/hooks/use-vector-stores'
+import { useCreateVectorStore } from '@/hooks/use-vector-stores'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -35,7 +35,7 @@ type VectorStoreForm = z.infer<typeof formSchema>
 
 export function VectorStoresCreateDialog() {
   const { open, setOpen } = useVectorStores()
-  const createMutation = useCreate()
+  const createMutation = useCreateVectorStore()
 
   const form = useForm<VectorStoreForm>({
     resolver: zodResolver(formSchema),

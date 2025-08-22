@@ -1,4 +1,5 @@
 import { Loader2Icon, PlusCircleIcon, Trash2Icon } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { useList as useFilesList } from '@/hooks/use-files'
 import {
   useListFiles,
@@ -22,7 +23,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useVectorStores } from './vector-stores-provider'
-import { cn } from '@/lib/utils'
 
 // 格式化时间
 function formatDate(timestamp: number): string {
@@ -106,9 +106,7 @@ export function VectorStoresFilesDrawer() {
           <SheetTitle className='flex items-center gap-2'>
             {currentRow?.name} - 文件列表
           </SheetTitle>
-          <SheetDescription>
-            对比文件库与知识库，已添加的文件将灰显显示
-          </SheetDescription>
+          <SheetDescription>查看哪些文件，被添加到了知识库</SheetDescription>
         </SheetHeader>
 
         <div className='mx-2 mb-2 flex-1 overflow-hidden rounded-md border'>

@@ -70,7 +70,7 @@ export interface ResponseAddFiles {
 export class VectorStoresApiService {
   private static basePath = '/vector_stores'
 
-  static async getList(params?: ParamsListVectorStore) {
+  static async listVectorStores(params?: ParamsListVectorStore) {
     const { data } = await axiosInstance.get<PaginatedResponse<VectorStore>>(
       this.basePath,
       { params }
@@ -78,14 +78,14 @@ export class VectorStoresApiService {
     return data
   }
 
-  static async deleteItem(vectorStoreId: string) {
+  static async deleteVectorStore(vectorStoreId: string) {
     const { data } = await axiosInstance.delete<
       ResponseDelete<'vector_store.deleted'>
     >(`${this.basePath}/${vectorStoreId}`)
     return data
   }
 
-  static async createItem(params: ParamsCreateVectorStore) {
+  static async createVectorStore(params: ParamsCreateVectorStore) {
     const { data } = await axiosInstance.post<ResponseCreateVectorStore>(
       this.basePath,
       params

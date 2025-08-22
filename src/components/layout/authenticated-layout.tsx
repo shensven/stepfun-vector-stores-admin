@@ -5,7 +5,7 @@ import { LayoutProvider } from '@/context/layout-provider'
 import { SearchProvider } from '@/context/search-provider'
 import {
   SidebarContent,
-  SidebarFooter,
+  // SidebarFooter,
   SidebarHeader,
   SidebarInset,
   SidebarProvider,
@@ -15,7 +15,7 @@ import { AppSidebar } from '@/components/layout/app-sidebar'
 import { SkipToMain } from '@/components/skip-to-main'
 import { sidebarData } from './data/sidebar-data'
 import { NavGroup } from './nav-group'
-import { NavUser } from './nav-user'
+// import { NavUser } from './nav-user'
 import { TeamSwitcher } from './team-switcher'
 
 type AuthenticatedLayoutProps = {
@@ -38,9 +38,9 @@ export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
                 <NavGroup key={props.title} {...props} />
               ))}
             </SidebarContent>
-            <SidebarFooter>
+            {/* <SidebarFooter>
               <NavUser user={sidebarData.user} />
-            </SidebarFooter>
+            </SidebarFooter> */}
             <SidebarRail />
           </AppSidebar>
           <SidebarInset

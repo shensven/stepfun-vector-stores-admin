@@ -2,7 +2,7 @@ import { useList } from '@/hooks/use-files'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
+// import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { FilesCreateDialog } from './components/files-create-dialog'
 import { FilesDeleteDialog } from './components/files-delete-dialog'
@@ -19,7 +19,7 @@ export function Files() {
         <div className='ms-auto flex items-center space-x-4'>
           <ThemeSwitch />
           <ConfigDrawer />
-          <ProfileDropdown />
+          {/* <ProfileDropdown /> */}
         </div>
       </Header>
 

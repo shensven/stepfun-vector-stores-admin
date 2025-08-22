@@ -2,7 +2,7 @@ import { useListVectorStores } from '@/hooks/use-vector-stores'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
+// import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { VectorStoresCreateDialog } from './components/vector-stores-create-dialog'
 import { VectorStoresDeleteDialog } from './components/vector-stores-delete-dialog'
@@ -20,7 +20,7 @@ function VectorStoresContent() {
         <div className='ms-auto flex items-center space-x-4'>
           <ThemeSwitch />
           <ConfigDrawer />
-          <ProfileDropdown />
+          {/* <ProfileDropdown /> */}
         </div>
       </Header>
 

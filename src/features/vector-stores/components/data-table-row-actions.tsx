@@ -1,7 +1,7 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { type Row } from '@tanstack/react-table'
 import { type VectorStore } from '@/services/vectorStoresAPI'
-import { FileText, Trash2 } from 'lucide-react'
+import { FolderOpen, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -44,7 +44,7 @@ export function DataTableRowActions<TData>({
         >
           查看文件
           <DropdownMenuShortcut>
-            <FileText size={16} />
+            <FolderOpen size={16} />
           </DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuSeparator />

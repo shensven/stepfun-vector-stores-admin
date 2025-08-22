@@ -96,13 +96,11 @@ export function VectorStoresFilesDrawer() {
     >
       <SheetContent className='sm:max-w-2lg flex w-full max-w-none flex-col md:max-w-4xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl'>
         <SheetHeader className='text-start'>
-          <SheetTitle className='flex items-center gap-2'>
-            {currentRow?.name} - 文件列表
-          </SheetTitle>
+          <SheetTitle className='truncate pr-8'>{currentRow?.name}</SheetTitle>
           <SheetDescription>查看哪些文件，被添加到了知识库</SheetDescription>
         </SheetHeader>
 
-        <div className='mx-2 flex gap-2'>
+        <div className='mx-3 flex gap-2'>
           <Badge variant='outline' className='text-xs'>
             {currentRow?.type}
           </Badge>
@@ -110,7 +108,7 @@ export function VectorStoresFilesDrawer() {
             正在使用 {includedFiles.length}
           </Badge>
         </div>
-        <div className='mx-2 mb-2 flex-1 overflow-hidden rounded-md border'>
+        <div className='mx-3 mb-2 flex-1 overflow-hidden rounded-md border'>
           <Table>
             <TableHeader>
               <TableRow>

@@ -19,7 +19,6 @@ import {
   // MessagesSquare,
   // ShieldCheck,
   Library,
-  Files,
 } from 'lucide-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 // import { ClerkLogo } from '@/assets/clerk-logo'
@@ -63,9 +62,9 @@ export const sidebarData: SidebarData = {
           icon: Library,
         },
         {
-          title: '文件管理',
+          title: '文件列表',
           url: '/files',
-          icon: Files,
+          icon: GalleryVerticalEnd,
         },
         // {
         //   title: 'Tasks',

@@ -107,23 +107,19 @@ export function VectorStoresTable({ data }: DataTableProps) {
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id} colSpan={header.colSpan}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id} colSpan={header.colSpan}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows.length > 0 &&
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -138,12 +134,13 @@ export function VectorStoresTable({ data }: DataTableProps) {
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
+              ))}
+
+            {table.getRowModel().rows.length === 0 && (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-24 text-center'
+                  className='h-12 text-center'
                 >
                   No results.
                 </TableCell>

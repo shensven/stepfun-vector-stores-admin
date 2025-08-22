@@ -6,6 +6,7 @@ import {
   useRemoveFile,
   useAddFiles,
 } from '@/hooks/use-vector-stores'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -103,12 +104,18 @@ export function VectorStoresFilesDrawer() {
     >
       <SheetContent className='flex w-full max-w-none flex-col sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-4xl 2xl:max-w-4xl'>
         <SheetHeader className='text-start'>
-          <SheetTitle className='flex items-center gap-2'>
-            {currentRow?.name} - 文件列表
-          </SheetTitle>
+          <SheetTitle className='flex items-center gap-2'>文件列表</SheetTitle>
           <SheetDescription>查看哪些文件，被添加到了知识库</SheetDescription>
         </SheetHeader>
 
+        <div className='mx-2 flex gap-2'>
+          <Badge variant='outline' className='text-xs'>
+            {currentRow?.name}
+          </Badge>
+          <Badge variant='outline' className='text-xs'>
+            正在使用 {includedFiles.length}
+          </Badge>
+        </div>
         <div className='mx-2 mb-2 flex-1 overflow-hidden rounded-md border'>
           <Table>
             <TableHeader>

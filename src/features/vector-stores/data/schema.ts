@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 // We're keeping a simple non-relational schema here.
 // IRL, you will have a schema for your data models.
-export const vectorsStoreListSchema = z.object({
+export const vectorStoreListSchema = z.object({
   id: z.string(),
   object: z.string(),
   created_at: z.number(),
@@ -10,4 +10,4 @@ export const vectorsStoreListSchema = z.object({
   type: z.string(),
 })
 
-export type VectorsStoreList = z.infer<typeof vectorsStoreListSchema>
+export type VectorStoreList = z.infer<typeof vectorStoreListSchema>

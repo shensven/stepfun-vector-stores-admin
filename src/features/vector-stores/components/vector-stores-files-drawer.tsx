@@ -96,13 +96,15 @@ export function VectorStoresFilesDrawer() {
     >
       <SheetContent className='sm:max-w-2lg flex w-full max-w-none flex-col md:max-w-4xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl'>
         <SheetHeader className='text-start'>
-          <SheetTitle className='flex items-center gap-2'>文件列表</SheetTitle>
+          <SheetTitle className='flex items-center gap-2'>
+            {currentRow?.name} - 文件列表
+          </SheetTitle>
           <SheetDescription>查看哪些文件，被添加到了知识库</SheetDescription>
         </SheetHeader>
 
         <div className='mx-2 flex gap-2'>
           <Badge variant='outline' className='text-xs'>
-            {currentRow?.name}
+            {currentRow?.type}
           </Badge>
           <Badge variant='outline' className='text-xs'>
             正在使用 {includedFiles.length}

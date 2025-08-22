@@ -63,7 +63,7 @@ export function FilesCreateDialog() {
   const form = useForm<FileForm>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      purpose: 'storage' as const,
+      purpose: 'retrieval-text' as const,
       uploadType: 'file' as const,
       url: '',
     },
@@ -97,7 +97,7 @@ export function FilesCreateDialog() {
       onOpenChange={(state) => {
         if (state) {
           form.reset({
-            purpose: 'storage',
+            purpose: 'retrieval-text',
             uploadType: 'file',
             url: '',
           })

@@ -2,6 +2,11 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { type VectorStore } from '@/services/vectorStoresAPI'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
@@ -48,11 +53,17 @@ export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
       <DataTableColumnHeader column={column} title='名称' />
     ),
     cell: ({ row }) => {
+      const name = row.getValue('name') as string
       return (
         <div className='flex space-x-2'>
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('name')}
-          </span>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className='max-w-32 truncate font-medium sm:max-w-sm md:max-w-72'>
+                {name}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>{name}</TooltipContent>
+          </Tooltip>
         </div>
       )
     },
@@ -65,11 +76,7 @@ export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
     ),
     cell: ({ row }) => {
       const type = row.getValue('type') as string
-      return (
-        <Badge variant='outline'>
-          {type === 'text' ? '文本' : type === 'image' ? '图片' : type}
-        </Badge>
-      )
+      return <Badge variant='outline'>{type}</Badge>
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))

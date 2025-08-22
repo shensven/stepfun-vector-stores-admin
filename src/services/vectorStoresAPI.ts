@@ -29,15 +29,16 @@ export interface ParamsCreateVectorStore {
   type: 'text' | 'image'
 }
 
-export interface ResponseDeleteVectorStore {
-  id: string
-  object: 'vector_store'
-  deleted: boolean
-}
-
 export interface ResponseCreateVectorStore {
   id: string
   name: string
+}
+
+export interface ResponseDelete<TObject extends string> {
+  id: string
+  deleted: boolean
+  // object: 'vector_store.deleted'
+  object: TObject
 }
 
 // Vector Store File 对象
@@ -64,9 +65,9 @@ export class VectorStoresApiService {
   }
 
   static async deleteItem(vectorStoreId: string) {
-    const { data } = await axiosInstance.delete<ResponseDeleteVectorStore>(
-      `${this.basePath}/${vectorStoreId}`
-    )
+    const { data } = await axiosInstance.delete<
+      ResponseDelete<'vector_store.deleted'>
+    >(`${this.basePath}/${vectorStoreId}`)
     return data
   }
 
@@ -82,6 +83,13 @@ export class VectorStoresApiService {
     const { data } = await axiosInstance.get<
       PaginatedResponse<VectorStoreFile>
     >(`${this.basePath}/${vectorStoreId}/files`)
+    return data
+  }
+
+  static async removeFile(vectorStoreId: string, fileId: string) {
+    const { data } = await axiosInstance.delete<
+      ResponseDelete<'vector_store.file.deleted'>
+    >(`${this.basePath}/${vectorStoreId}/files/${fileId}`)
     return data
   }
 }

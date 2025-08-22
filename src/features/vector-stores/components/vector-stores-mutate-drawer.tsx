@@ -1,5 +1,5 @@
-import { MoreHorizontal } from 'lucide-react'
-import { useListFiles } from '@/hooks/use-vector-stores'
+import { Loader2Icon, MoreHorizontal } from 'lucide-react'
+import { useListFiles, useRemoveFile } from '@/hooks/use-vector-stores'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -41,8 +41,25 @@ export function VectorStoresFilesDrawer() {
   // 使用真实的 API 查询文件列表
   const { data: filesData } = useListFiles(currentRow?.id || '')
 
+  // 使用真实的 API 删除文件
+  const removeFileMutation = useRemoveFile()
+
   // 获取文件列表，如果没有数据则使用空数组
   const files = filesData?.data || []
+
+  // 处理文件删除
+  const handleRemoveFile = async (fileId: string) => {
+    if (!currentRow?.id) return
+
+    try {
+      await removeFileMutation.mutateAsync({
+        vectorStoreId: currentRow.id,
+        fileId: fileId,
+      })
+    } catch (_error) {
+      // 错误已在 hook 中处理
+    }
+  }
 
   return (
     <Sheet
@@ -115,7 +132,14 @@ export function VectorStoresFilesDrawer() {
                         <DropdownMenuContent align='end'>
                           <DropdownMenuItem>下载</DropdownMenuItem>
                           <DropdownMenuItem>预览</DropdownMenuItem>
-                          <DropdownMenuItem className='text-destructive'>
+                          <DropdownMenuItem
+                            className='text-destructive'
+                            onClick={() => handleRemoveFile(file.id)}
+                            disabled={removeFileMutation.isPending}
+                          >
+                            {removeFileMutation.isPending && (
+                              <Loader2Icon className='animate-spin' />
+                            )}
                             删除
                           </DropdownMenuItem>
                         </DropdownMenuContent>

@@ -46,3 +46,21 @@ export function useListFiles(vectorStoreId: string) {
     queryFn: () => VectorStoresApiService.listFiles(vectorStoreId),
   })
 }
+
+export function useRemoveFile() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({
+      vectorStoreId,
+      fileId,
+    }: {
+      vectorStoreId: string
+      fileId: string
+    }) => VectorStoresApiService.removeFile(vectorStoreId, fileId),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['vector_stores_files'] })
+      toast.success(`文件 "${data.id}" 已成功删除`)
+    },
+  })
+}

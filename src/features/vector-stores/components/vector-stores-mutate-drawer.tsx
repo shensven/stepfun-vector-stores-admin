@@ -1,12 +1,11 @@
-import { Loader2Icon, MoreHorizontal } from 'lucide-react'
-import { useListFiles, useRemoveFile } from '@/hooks/use-vector-stores'
-import { Button } from '@/components/ui/button'
+import { Loader2Icon, PlusCircleIcon, Trash2Icon } from 'lucide-react'
+import { useList as useFilesList } from '@/hooks/use-files'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+  useListFiles,
+  useRemoveFile,
+  useAddFiles,
+} from '@/hooks/use-vector-stores'
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -23,6 +22,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useVectorStores } from './vector-stores-provider'
+import { cn } from '@/lib/utils'
 
 // 格式化时间
 function formatDate(timestamp: number): string {
@@ -38,23 +38,51 @@ function formatDate(timestamp: number): string {
 export function VectorStoresFilesDrawer() {
   const { open, setOpen, currentRow, setCurrentRow } = useVectorStores()
 
-  // 使用真实的 API 查询文件列表
+  // 当前知识库内的文件
   const { data: filesData } = useListFiles(currentRow?.id || '')
+  const includedFiles = filesData?.data || []
 
-  // 使用真实的 API 删除文件
+  // 所有文件列表（来自 /files）
+  const { data: allFilesData } = useFilesList()
+  const allFiles = allFilesData?.data || []
+
+  // 删除文件（从当前知识库移除）
   const removeFileMutation = useRemoveFile()
 
-  // 获取文件列表，如果没有数据则使用空数组
-  const files = filesData?.data || []
+  // 添加文件到知识库
+  const addFilesMutation = useAddFiles()
 
-  // 处理文件删除
+  const includedIdSet = new Set(includedFiles.map((f) => f.id))
+
   const handleRemoveFile = async (fileId: string) => {
     if (!currentRow?.id) return
-
     try {
       await removeFileMutation.mutateAsync({
         vectorStoreId: currentRow.id,
         fileId: fileId,
+      })
+    } catch (_error) {
+      // 错误已在 hook 中处理
+    }
+  }
+
+  const handleAddFile = async (fileId: string) => {
+    if (!currentRow?.id) return
+
+    // 验证必填字段
+    if (!fileId || !fileId.trim()) {
+      // file_id 是必填字段，直接返回不执行操作
+      return
+    }
+
+    // 使用文件名作为描述，确保 description 不为空
+    const file = allFiles.find((f) => f.id === fileId)
+    const description = file?.filename || '未命名文件'
+
+    try {
+      await addFilesMutation.mutateAsync({
+        vectorStoreId: currentRow.id,
+        files: [{ file_id: fileId, description }],
       })
     } catch (_error) {
       // 错误已在 hook 中处理
@@ -78,7 +106,9 @@ export function VectorStoresFilesDrawer() {
           <SheetTitle className='flex items-center gap-2'>
             {currentRow?.name} - 文件列表
           </SheetTitle>
-          <SheetDescription>管理和浏览知识库中的文件</SheetDescription>
+          <SheetDescription>
+            对比文件库与知识库，已添加的文件将灰显显示
+          </SheetDescription>
         </SheetHeader>
 
         <div className='mx-2 mb-2 flex-1 overflow-hidden rounded-md border'>
@@ -87,69 +117,86 @@ export function VectorStoresFilesDrawer() {
               <TableRow>
                 <TableHead>ID</TableHead>
                 <TableHead>文件名</TableHead>
-                <TableHead>描述</TableHead>
                 <TableHead>创建时间</TableHead>
-                <TableHead className='w-[80px]'>操作</TableHead>
+                <TableHead className='w-[120px]'>操作</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {files.length ? (
-                files.map((file) => (
-                  <TableRow key={file.id}>
-                    <TableCell>
-                      <div className='w-[120px] font-mono text-xs'>
-                        {file.id}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className='flex items-center gap-2'>
-                        <span className='max-w-32 truncate font-medium sm:max-w-48 md:max-w-64'>
-                          {file.metadata.file_name}
+              {allFiles.length ? (
+                allFiles.map((file) => {
+                  const included = includedIdSet.has(file.id)
+                  const isRemoving =
+                    removeFileMutation.isPending &&
+                    removeFileMutation.variables?.fileId === file.id
+                  const isAdding =
+                    addFilesMutation.isPending &&
+                    addFilesMutation.variables?.files.some(
+                      (f) => f.file_id === file.id
+                    )
+
+                  return (
+                    <TableRow
+                      key={file.id}
+                      className={cn(included && 'bg-muted')}
+                    >
+                      <TableCell>
+                        <div className='w-[120px] font-mono text-xs'>
+                          {file.id}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <span
+                          className={
+                            'max-w-32 truncate font-medium sm:max-w-48 md:max-w-64'
+                          }
+                        >
+                          {file.filename}
                         </span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className='text-muted-foreground text-sm'>
-                        {file.metadata.description || '无描述'}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className='text-sm'>
-                        {formatDate(file.created_at * 1000)}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
+                      </TableCell>
+                      <TableCell>
+                        <div className='text-sm'>
+                          {formatDate(file.created_at * 1000)}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className='flex gap-2'>
                           <Button
-                            variant='ghost'
+                            variant={included ? 'outline' : 'default'}
                             size='sm'
-                            className='h-8 w-8 p-0'
+                            onClick={() => handleAddFile(file.id)}
+                            disabled={included || isAdding || isRemoving}
                           >
-                            <MoreHorizontal className='h-4 w-4' />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align='end'>
-                          <DropdownMenuItem>下载</DropdownMenuItem>
-                          <DropdownMenuItem>预览</DropdownMenuItem>
-                          <DropdownMenuItem
-                            className='text-destructive'
-                            onClick={() => handleRemoveFile(file.id)}
-                            disabled={removeFileMutation.isPending}
-                          >
-                            {removeFileMutation.isPending && (
-                              <Loader2Icon className='animate-spin' />
+                            {isAdding && (
+                              <Loader2Icon className='mr-1 h-3 w-3 animate-spin' />
                             )}
-                            删除
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))
+                            {!isAdding && (
+                              <PlusCircleIcon className='mr-1 h-3 w-3' />
+                            )}
+                            添加
+                          </Button>
+
+                          <Button
+                            variant={included ? 'destructive' : 'outline'}
+                            size='sm'
+                            onClick={() => handleRemoveFile(file.id)}
+                            disabled={!included || isRemoving || isAdding}
+                          >
+                            {isRemoving && (
+                              <Loader2Icon className='mr-1 h-3 w-3 animate-spin' />
+                            )}
+                            {!isRemoving && (
+                              <Trash2Icon className='mr-1 h-3 w-3' />
+                            )}
+                            移除
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
               ) : (
                 <TableRow>
-                  <TableCell colSpan={5} className='h-24 text-center'>
+                  <TableCell colSpan={4} className='text-center'>
                     暂无文件
                   </TableCell>
                 </TableRow>

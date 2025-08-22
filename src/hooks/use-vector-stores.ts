@@ -3,6 +3,7 @@ import {
   VectorStoresApiService,
   type ParamsListVectorStore,
   type ParamsCreateVectorStore,
+  type ParamsAddFiles,
 } from '@/services/vectorStoresAPI'
 import { toast } from 'sonner'
 
@@ -61,6 +62,19 @@ export function useRemoveFile() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['vector_stores_files'] })
       toast.success(`文件 "${data.id}" 已成功删除`)
+    },
+  })
+}
+
+export function useAddFiles() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (params: ParamsAddFiles) =>
+      VectorStoresApiService.addFiles(params),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['vector_stores_files'] })
+      toast.success(`${data.files.length} 个文件已成功添加到知识库`)
     },
   })
 }

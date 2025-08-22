@@ -53,6 +53,20 @@ export interface VectorStoreFile {
   }
 }
 
+export interface ParamsAddFiles {
+  vectorStoreId: string
+  files: Array<{
+    file_id: string
+    description: string
+  }>
+}
+export interface ResponseAddFiles {
+  files: Array<{
+    file_id: string
+    metadata: { description: string }
+  }>
+}
+
 export class VectorStoresApiService {
   private static basePath = '/vector_stores'
 
@@ -90,6 +104,15 @@ export class VectorStoresApiService {
     const { data } = await axiosInstance.delete<
       ResponseDelete<'vector_store.file.deleted'>
     >(`${this.basePath}/${vectorStoreId}/files/${fileId}`)
+    return data
+  }
+
+  static async addFiles(params: ParamsAddFiles) {
+    const { vectorStoreId, files } = params
+    const { data } = await axiosInstance.post<ResponseAddFiles>(
+      `${this.basePath}/${vectorStoreId}/files`,
+      { files }
+    )
     return data
   }
 }

@@ -7,6 +7,8 @@ type VectorStoresDialogType = 'create' | 'delete' | 'list-files'
 type VectorStoresContextType = {
   open: VectorStoresDialogType | null
   setOpen: (str: VectorStoresDialogType | null) => void
+  addFileOpen: boolean
+  setAddFileOpen: (v: boolean) => void
   currentRow: VectorStore | null
   setCurrentRow: React.Dispatch<React.SetStateAction<VectorStore | null>>
 }
@@ -21,10 +23,20 @@ export function VectorStoresProvider({
   children: React.ReactNode
 }) {
   const [open, setOpen] = useDialogState<VectorStoresDialogType>(null)
+  const [addFileOpen, setAddFileOpen] = useState(false)
   const [currentRow, setCurrentRow] = useState<VectorStore | null>(null)
 
   return (
-    <VectorStoresContext value={{ open, setOpen, currentRow, setCurrentRow }}>
+    <VectorStoresContext
+      value={{
+        open,
+        setOpen,
+        addFileOpen,
+        setAddFileOpen,
+        currentRow,
+        setCurrentRow,
+      }}
+    >
       {children}
     </VectorStoresContext>
   )

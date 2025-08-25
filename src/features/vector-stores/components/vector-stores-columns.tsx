@@ -125,74 +125,48 @@ export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
     },
   },
   {
-    id: 'total_files',
-    accessorKey: 'file_counts.total',
+    id: 'files',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='总文件数' />
+      <DataTableColumnHeader column={column} title='文件' />
     ),
     cell: ({ row }) => {
-      const fileCounts = row.original.file_counts
-      return <div className='text-center'>{fileCounts.total}</div>
-    },
-  },
-  {
-    id: 'completed_files',
-    accessorKey: 'file_counts.completed',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='已完成' />
-    ),
-    cell: ({ row }) => {
-      const fileCounts = row.original.file_counts
+      const c = row.original.file_counts
       return (
-        <div className='text-center text-green-600'>{fileCounts.completed}</div>
-      )
-    },
-  },
-  {
-    id: 'in_progress_files',
-    accessorKey: 'file_counts.in_progress',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='进行中' />
-    ),
-    cell: ({ row }) => {
-      const fileCounts = row.original.file_counts
-      return (
-        <div className='text-center text-amber-600'>
-          {fileCounts.in_progress}
-        </div>
-      )
-    },
-  },
-  {
-    id: 'failed_files',
-    accessorKey: 'file_counts.failed',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='失败' />
-    ),
-    cell: ({ row }) => {
-      const fileCounts = row.original.file_counts
-      return (
-        <div
-          className={`text-center ${fileCounts.failed > 0 ? 'text-red-600' : 'text-gray-400'}`}
-        >
-          {fileCounts.failed}
-        </div>
-      )
-    },
-  },
-  {
-    id: 'cancelled_files',
-    accessorKey: 'file_counts.cancelled',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='已取消' />
-    ),
-    cell: ({ row }) => {
-      const fileCounts = row.original.file_counts
-      return (
-        <div
-          className={`text-center ${fileCounts.cancelled > 0 ? 'text-orange-600' : 'text-gray-400'}`}
-        >
-          {fileCounts.cancelled}
+        <div className='flex flex-col gap-1'>
+          <div className='flex flex-wrap items-center gap-1'>
+            <Badge
+              variant='outline'
+              className='min-w-[2ch] justify-center px-2 text-center'
+            >
+              总文件数 {c.total}
+            </Badge>
+            <Badge
+              variant='outline'
+              className='min-w-[2ch] justify-center border-green-200 px-2 text-center text-green-600'
+            >
+              已完成 {c.completed}
+            </Badge>
+          </div>
+          <div className='flex flex-wrap items-center gap-1'>
+            <Badge
+              variant='outline'
+              className='min-w-[2ch] justify-center border-amber-200 px-2 text-center text-amber-600'
+            >
+              进行中 {c.in_progress}
+            </Badge>
+            <Badge
+              variant='outline'
+              className={`min-w-[2ch] justify-center px-2 text-center ${c.failed > 0 ? 'border-red-200 text-red-600' : 'text-muted-foreground'}`}
+            >
+              失败 {c.failed}
+            </Badge>
+            <Badge
+              variant='outline'
+              className={`min-w-[2ch] justify-center px-2 text-center ${c.cancelled > 0 ? 'border-orange-200 text-orange-600' : 'text-muted-foreground'}`}
+            >
+              已取消 {c.cancelled}
+            </Badge>
+          </div>
         </div>
       )
     },
@@ -207,7 +181,7 @@ export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
       const timestamp = row.getValue('created_at') as number
       const date = new Date(timestamp * 1000)
       return (
-        <div className='text-sm'>
+        <div className='font-mono text-sm'>
           {date.toLocaleDateString('zh-CN')}{' '}
           {date.toLocaleTimeString('zh-CN', { hour12: false })}
         </div>

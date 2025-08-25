@@ -24,6 +24,20 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useVectorStores } from './vector-stores-provider'
+import { useEffect, useMemo, useState } from 'react'
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+} from '@radix-ui/react-icons'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 // 格式化时间
 function formatDate(timestamp: number): string {
@@ -46,6 +60,25 @@ export function VectorStoresFilesDrawer() {
   // 所有文件列表（来自 /files）
   const { data: allFilesData } = useFilesList()
   const allFiles = allFilesData?.data || []
+
+  // 本地分页状态
+  const [pageIndex, setPageIndex] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+
+  const pageCount = useMemo(() => {
+    return Math.max(1, Math.ceil(allFiles.length / pageSize))
+  }, [allFiles.length, pageSize])
+
+  useEffect(() => {
+    if (pageIndex > pageCount - 1) {
+      setPageIndex(Math.max(0, pageCount - 1))
+    }
+  }, [pageIndex, pageCount])
+
+  const paginatedFiles = useMemo(() => {
+    const start = pageIndex * pageSize
+    return allFiles.slice(start, start + pageSize)
+  }, [allFiles, pageIndex, pageSize])
 
   // 删除文件（从当前知识库移除）
   const removeFileMutation = useRemoveFile()
@@ -119,8 +152,8 @@ export function VectorStoresFilesDrawer() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {allFiles.length ? (
-                allFiles.map((file) => {
+              {paginatedFiles.length ? (
+                paginatedFiles.map((file) => {
                   const included = includedIdSet.has(file.id)
                   const isRemoving =
                     removeFileMutation.isPending &&
@@ -196,6 +229,80 @@ export function VectorStoresFilesDrawer() {
               )}
             </TableBody>
           </Table>
+        </div>
+
+        {/* 分页控件 */}
+        <div
+          className='mx-3 mb-3 flex items-center justify-between overflow-clip px-2'
+          style={{ overflowClipMargin: 1 }}
+        >
+          <div className='text-muted-foreground hidden flex-1 text-sm sm:block'>
+            共 {allFiles.length} 项
+          </div>
+          <div className='flex items-center sm:space-x-6 lg:space-x-8'>
+            <div className='flex items-center space-x-2'>
+              <p className='hidden text-sm font-medium sm:block'>每页显示</p>
+              <Select
+                value={`${pageSize}`}
+                onValueChange={(value) => {
+                  setPageSize(Number(value))
+                  setPageIndex(0)
+                }}
+              >
+                <SelectTrigger className='h-8 w-[70px]'>
+                  <SelectValue placeholder={pageSize} />
+                </SelectTrigger>
+                <SelectContent side='top'>
+                  {[10, 20, 30, 40, 50].map((size) => (
+                    <SelectItem key={size} value={`${size}`}>
+                      {size}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className='flex w-[100px] items-center justify-center text-sm font-medium'>
+              第 {pageIndex + 1} / {pageCount} 页
+            </div>
+            <div className='flex items-center space-x-2'>
+              <Button
+                variant='outline'
+                className='hidden h-8 w-8 p-0 lg:flex'
+                onClick={() => setPageIndex(0)}
+                disabled={pageIndex === 0}
+              >
+                <span className='sr-only'>Go to first page</span>
+                <DoubleArrowLeftIcon className='h-4 w-4' />
+              </Button>
+              <Button
+                variant='outline'
+                className='h-8 w-8 p-0'
+                onClick={() => setPageIndex((p) => Math.max(0, p - 1))}
+                disabled={pageIndex === 0}
+              >
+                <span className='sr-only'>Go to previous page</span>
+                <ChevronLeftIcon className='h-4 w-4' />
+              </Button>
+              <Button
+                variant='outline'
+                className='h-8 w-8 p-0'
+                onClick={() => setPageIndex((p) => Math.min(pageCount - 1, p + 1))}
+                disabled={pageIndex >= pageCount - 1}
+              >
+                <span className='sr-only'>Go to next page</span>
+                <ChevronRightIcon className='h-4 w-4' />
+              </Button>
+              <Button
+                variant='outline'
+                className='hidden h-8 w-8 p-0 lg:flex'
+                onClick={() => setPageIndex(pageCount - 1)}
+                disabled={pageIndex >= pageCount - 1}
+              >
+                <span className='sr-only'>Go to last page</span>
+                <DoubleArrowRightIcon className='h-4 w-4' />
+              </Button>
+            </div>
+          </div>
         </div>
       </SheetContent>
     </Sheet>

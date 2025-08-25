@@ -1,3 +1,10 @@
+import { useEffect, useMemo, useState } from 'react'
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+} from '@radix-ui/react-icons'
 import { Loader2Icon, PlusCircleIcon, Trash2Icon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useList as useFilesList } from '@/hooks/use-files'
@@ -8,6 +15,13 @@ import {
 } from '@/hooks/use-vector-stores'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   Sheet,
   SheetContent,
@@ -24,20 +38,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useVectorStores } from './vector-stores-provider'
-import { useEffect, useMemo, useState } from 'react'
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from '@radix-ui/react-icons'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 
 // 格式化时间
 function formatDate(timestamp: number): string {
@@ -286,7 +286,9 @@ export function VectorStoresFilesDrawer() {
               <Button
                 variant='outline'
                 className='h-8 w-8 p-0'
-                onClick={() => setPageIndex((p) => Math.min(pageCount - 1, p + 1))}
+                onClick={() =>
+                  setPageIndex((p) => Math.min(pageCount - 1, p + 1))
+                }
                 disabled={pageIndex >= pageCount - 1}
               >
                 <span className='sr-only'>Go to next page</span>

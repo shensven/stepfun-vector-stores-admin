@@ -141,7 +141,7 @@ export function VectorStoresFilesDrawer() {
             正在使用 {includedFiles.length}
           </Badge>
         </div>
-        <div className='mx-3 mb-2 flex-1 overflow-hidden rounded-md border'>
+        <div className='mx-3 mb-2 h-full flex-1 overflow-auto rounded-md border'>
           <Table>
             <TableHeader>
               <TableRow>

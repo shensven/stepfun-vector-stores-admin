@@ -5,11 +5,6 @@ import { toast } from 'sonner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
@@ -54,8 +49,8 @@ export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
         }
       }
       return (
-        <div className='flex items-center justify-between gap-1'>
-          <div className='truncate font-mono'>{id}</div>
+        <div className='flex items-center'>
+          <div className='font-mono'>{id}</div>
           <Button
             variant='ghost'
             size='icon'
@@ -87,16 +82,48 @@ export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
           toast.error('复制失败')
         }
       }
+      // 在标点符号/分隔符后插入软换行机会 (<wbr/>)，提升折行观感
+      const BREAK_AFTER = new Set<string>([
+        '/',
+        ',',
+        '.',
+        '_',
+        '-',
+        ';',
+        ':',
+        '!',
+        '?',
+        '，',
+        '。',
+        '；',
+        '：',
+        '！',
+        '、',
+        '（',
+        '）',
+        '(',
+        ')',
+        '【',
+        '】',
+        '[',
+        ']',
+        '{',
+        '}',
+      ])
+      const renderWithBreaks = (text: string) => {
+        const chars = Array.from(text)
+        return chars.map((ch, idx) => (
+          <span key={idx}>
+            {ch}
+            {BREAK_AFTER.has(ch) ? <wbr /> : null}
+          </span>
+        ))
+      }
       return (
-        <div className='flex items-center justify-between'>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <span className='max-w-32 truncate font-medium sm:max-w-sm md:max-w-72'>
-                {name}
-              </span>
-            </TooltipTrigger>
-            <TooltipContent>{name}</TooltipContent>
-          </Tooltip>
+        <div className='flex w-full items-center gap-1'>
+          <span className='line-clamp-2 max-w-[360px] min-w-[220px] flex-1 overflow-hidden font-medium break-words whitespace-normal'>
+            {renderWithBreaks(name)}
+          </span>
           <Button
             variant='ghost'
             size='icon'
@@ -133,7 +160,7 @@ export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
       const c = row.original.file_counts
       return (
         <div className='flex flex-col gap-1'>
-          <div className='flex flex-wrap items-center gap-1'>
+          <div className='flex items-center gap-1 overflow-hidden whitespace-nowrap'>
             <Badge
               variant='outline'
               className='min-w-[2ch] justify-center px-2 text-center'
@@ -147,7 +174,7 @@ export const vectorStoresColumns: ColumnDef<VectorStore>[] = [
               已完成 {c.completed}
             </Badge>
           </div>
-          <div className='flex flex-wrap items-center gap-1'>
+          <div className='flex items-center gap-1 overflow-hidden whitespace-nowrap'>
             <Badge
               variant='outline'
               className='min-w-[2ch] justify-center border-amber-200 px-2 text-center text-amber-600'

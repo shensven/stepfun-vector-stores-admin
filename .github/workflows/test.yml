@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: |
@@ -41,10 +41,12 @@ jobs:
       - name: Run ESLint check
         run: |
           set -o pipefail 
-          pnpm lint
+          pnpm lint:check
 
-      # - name: Analyze unused files and dependencies
-      #   run: pnpm knip
+      - name: Analyze unused files and dependencies
+        run: |
+          set -o pipefail 
+          pnpm knip:check
 
       - name: Build the project
         run: |

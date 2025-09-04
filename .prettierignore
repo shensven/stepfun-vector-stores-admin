@@ -2,17 +2,18 @@
 /*
 
 # Except these files & folders
+!/.github
 !/src
 !index.html
 !package.json
+!vite.config.ts
 !tailwind.config.js
+!postcss.config.js
+!eslint.config.js
+!knip.config.ts
 !tsconfig.json
 !tsconfig.node.json
-!vite.config.ts
-!.prettierrc
 !README.md
-!eslint.config.js
-!postcss.config.js
 
 # Ignore auto generated routeTree.gen.ts
 /src/routeTree.gen.ts

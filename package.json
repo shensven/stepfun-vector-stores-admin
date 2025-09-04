@@ -6,11 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
     "format:check": "prettier --check .",
-    "format": "prettier --write .",
-    "knip": "knip"
+    "lint:check": "eslint .",
+    "knip:check": "knip"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.42.1",

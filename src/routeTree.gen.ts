@@ -18,6 +18,7 @@ import { Route as errors404RouteImport } from './routes/(errors)/404'
 import { Route as errors403RouteImport } from './routes/(errors)/403'
 import { Route as errors401RouteImport } from './routes/(errors)/401'
 import { Route as authSignUpRouteImport } from './routes/(auth)/sign-up'
+import { Route as authSignInEnvRouteImport } from './routes/(auth)/sign-in-env'
 import { Route as authSignIn2RouteImport } from './routes/(auth)/sign-in-2'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
@@ -84,6 +85,11 @@ const errors401Route = errors401RouteImport.update({
 const authSignUpRoute = authSignUpRouteImport.update({
   id: '/(auth)/sign-up',
   path: '/sign-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authSignInEnvRoute = authSignInEnvRouteImport.update({
+  id: '/(auth)/sign-in-env',
+  path: '/sign-in-env',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authSignIn2Route = authSignIn2RouteImport.update({
@@ -218,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
   '/sign-in-2': typeof authSignIn2Route
+  '/sign-in-env': typeof authSignInEnvRoute
   '/sign-up': typeof authSignUpRoute
   '/401': typeof errors401Route
   '/403': typeof errors403Route
@@ -248,6 +255,7 @@ export interface FileRoutesByTo {
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
   '/sign-in-2': typeof authSignIn2Route
+  '/sign-in-env': typeof authSignInEnvRoute
   '/sign-up': typeof authSignUpRoute
   '/401': typeof errors401Route
   '/403': typeof errors403Route
@@ -283,6 +291,7 @@ export interface FileRoutesById {
   '/(auth)/otp': typeof authOtpRoute
   '/(auth)/sign-in': typeof authSignInRoute
   '/(auth)/sign-in-2': typeof authSignIn2Route
+  '/(auth)/sign-in-env': typeof authSignInEnvRoute
   '/(auth)/sign-up': typeof authSignUpRoute
   '/(errors)/401': typeof errors401Route
   '/(errors)/403': typeof errors403Route
@@ -317,6 +326,7 @@ export interface FileRouteTypes {
     | '/otp'
     | '/sign-in'
     | '/sign-in-2'
+    | '/sign-in-env'
     | '/sign-up'
     | '/401'
     | '/403'
@@ -347,6 +357,7 @@ export interface FileRouteTypes {
     | '/otp'
     | '/sign-in'
     | '/sign-in-2'
+    | '/sign-in-env'
     | '/sign-up'
     | '/401'
     | '/403'
@@ -381,6 +392,7 @@ export interface FileRouteTypes {
     | '/(auth)/otp'
     | '/(auth)/sign-in'
     | '/(auth)/sign-in-2'
+    | '/(auth)/sign-in-env'
     | '/(auth)/sign-up'
     | '/(errors)/401'
     | '/(errors)/403'
@@ -413,6 +425,7 @@ export interface RootRouteChildren {
   authOtpRoute: typeof authOtpRoute
   authSignInRoute: typeof authSignInRoute
   authSignIn2Route: typeof authSignIn2Route
+  authSignInEnvRoute: typeof authSignInEnvRoute
   authSignUpRoute: typeof authSignUpRoute
   errors401Route: typeof errors401Route
   errors403Route: typeof errors403Route
@@ -484,6 +497,13 @@ declare module '@tanstack/react-router' {
       path: '/sign-up'
       fullPath: '/sign-up'
       preLoaderRoute: typeof authSignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/sign-in-env': {
+      id: '/(auth)/sign-in-env'
+      path: '/sign-in-env'
+      fullPath: '/sign-in-env'
+      preLoaderRoute: typeof authSignInEnvRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/sign-in-2': {
@@ -752,6 +772,7 @@ const rootRouteChildren: RootRouteChildren = {
   authOtpRoute: authOtpRoute,
   authSignInRoute: authSignInRoute,
   authSignIn2Route: authSignIn2Route,
+  authSignInEnvRoute: authSignInEnvRoute,
   authSignUpRoute: authSignUpRoute,
   errors401Route: errors401Route,
   errors403Route: errors403Route,

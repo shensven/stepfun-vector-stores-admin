@@ -8,6 +8,12 @@ This project is built on [Shadcn Admin Dashboard](https://github.com/satnaing/sh
 
 ## Run Locally
 
+Copy `.env.example` to `.env` for usage, and configure your secrets.
+
+```bash
+  cp .env.example .env
+```
+
 Install dependencies
 
 ```bash

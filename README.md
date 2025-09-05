@@ -11,19 +11,23 @@ This project is built on [Shadcn Admin Dashboard](https://github.com/satnaing/sh
 Copy `.env.example` to `.env` for usage, and configure your secrets.
 
 ```bash
-  cp .env.example .env
+cp .env.example .env
 ```
 
-Install dependencies
+Install dependencies & Build
 
 ```bash
-  pnpm install
+pnpm install
+```
+
+```bash
+pnpm build
 ```
 
 Start the server
 
 ```bash
-  pnpm run dev
+pnpm preview
 ```
 
 ## Credits

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { type StepfunFile } from '@/services/filesAPI'
 import useDialogState from '@/hooks/use-dialog-state'
 
-type FilesDialogType = 'create' | 'delete'
+type FilesDialogType = 'create' | 'delete' | 'batch-upload'
 
 type FilesContextType = {
   open: FilesDialogType | null

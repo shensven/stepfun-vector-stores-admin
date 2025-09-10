@@ -4,6 +4,7 @@ import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 // import { ProfileDropdown } from '@/components/profile-dropdown'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { FilesBatchUploadDialog } from './components/files-batch-upload-dialog'
 import { FilesCreateDialog } from './components/files-create-dialog'
 import { FilesDeleteDialog } from './components/files-delete-dialog'
 import { FilesPrimaryButtons } from './components/files-primary-buttons'
@@ -38,6 +39,7 @@ export function Files() {
 
       <FilesCreateDialog />
       <FilesDeleteDialog />
+      <FilesBatchUploadDialog />
     </FilesProvider>
   )
 }

@@ -107,7 +107,7 @@ export function FilesCreateDialog() {
         setOpen(state ? 'create' : null)
       }}
     >
-      <DialogContent className='sm:max-w-md'>
+      <DialogContent className='sm:max-w-2xl'>
         <DialogHeader className='text-start'>
           <DialogTitle>上传文件</DialogTitle>
           <DialogDescription>上传一个文件到文件服务</DialogDescription>

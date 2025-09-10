@@ -6,7 +6,7 @@ const STEPFUN_API_KEY = import.meta.env.VITE_STEPFUN_API_KEY
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: STEPFUN_ENDPOINT,
-  timeout: 10000,
+  // timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 })
 

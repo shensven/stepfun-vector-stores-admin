@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { useFiles } from './files-provider'
 
 const formSchema = z.object({
@@ -237,11 +238,11 @@ export function FilesBatchUploadDialog() {
                           <p className='text-muted-foreground text-sm'>
                             已选择 {fileList.length} 个文件
                           </p>
-                          <div className='max-h-48 space-y-2 overflow-y-auto rounded-md border p-2'>
+                          <ScrollArea className='h-48 space-y-2 rounded-md border'>
                             {fileList.map((fileItem, index) => (
                               <div
                                 key={index}
-                                className='bg-muted flex items-center justify-between rounded-xs p-2'
+                                className='bg-muted m-3 flex items-center justify-between rounded-sm p-2'
                               >
                                 <div className='min-w-0 flex-1'>
                                   <p className='truncate text-sm font-medium'>
@@ -279,7 +280,7 @@ export function FilesBatchUploadDialog() {
                                 </div>
                               </div>
                             ))}
-                          </div>
+                          </ScrollArea>
                         </div>
                       )}
                     </div>

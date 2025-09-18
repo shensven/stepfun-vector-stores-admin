@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { type StepfunFile } from '@/services/filesAPI'
+import { type StepfunFile } from '@/services/files-api'
 import useDialogState from '@/hooks/use-dialog-state'
 
 type FilesDialogType = 'create' | 'delete' | 'batch-upload'

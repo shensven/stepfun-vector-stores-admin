@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { type Table } from '@tanstack/react-table'
-import type { StepfunFile } from '@/services/filesAPI'
+import type { StepfunFile } from '@/services/files-api'
 import { Trash2, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { sleep } from '@/utils/sleep'

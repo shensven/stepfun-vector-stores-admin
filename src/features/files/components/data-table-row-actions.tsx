@@ -1,6 +1,6 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { type Row } from '@tanstack/react-table'
-import { type StepfunFile } from '@/services/filesAPI'
+import { type StepfunFile } from '@/services/files-api'
 import { Trash2, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {

@@ -1,6 +1,6 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { type Row } from '@tanstack/react-table'
-import { type VectorStore } from '@/services/vectorStoresAPI'
+import { type VectorStore } from '@/services/vector-stores-api'
 import { FolderOpen, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {

@@ -1,5 +1,5 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { type VectorStore } from '@/services/vectorStoresAPI'
+import { type VectorStore } from '@/services/vector-stores-api'
 import { Copy } from 'lucide-react'
 import { toast } from 'sonner'
 import { Badge } from '@/components/ui/badge'

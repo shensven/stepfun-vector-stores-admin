@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import type { VectorStore } from '@/services/vectorStoresAPI'
+import type { VectorStore } from '@/services/vector-stores-api'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
 import {
   Table,

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { type Table } from '@tanstack/react-table'
-import type { VectorStore } from '@/services/vectorStoresAPI'
+import type { VectorStore } from '@/services/vector-stores-api'
 import { Trash2, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { sleep } from '@/utils/sleep'

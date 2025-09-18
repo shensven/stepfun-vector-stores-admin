@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import type { StepfunFile } from '@/services/filesAPI'
+import type { StepfunFile } from '@/services/files-api'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
 import {
   Table,

@@ -1,12 +1,12 @@
 import type { AxiosError } from 'axios'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { StepfunError } from '@/services/api'
 import {
   FilesApiService,
   type StepfunFileDeleteResponse,
   type StepfunFileCreateParams,
   type StepfunFileCreateResponse,
-} from '@/services/filesAPI'
+} from '@/services/files-api'
+import type { StepfunError } from '@/services/http-client'
 import { toast } from 'sonner'
 
 type ListOptions = {

@@ -32,6 +32,7 @@ axiosInstance.interceptors.response.use(
 )
 
 export default axiosInstance
+export { axiosInstance }
 
 // 通用分页响应类型
 export interface PaginatedResponse<T> {

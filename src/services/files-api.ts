@@ -1,5 +1,5 @@
-import axiosInstance from './api'
-import type { PaginatedResponse } from './api'
+import type { PaginatedResponse } from './http-client'
+import { axiosInstance } from './http-client'
 
 export interface StepfunFile {
   id: string

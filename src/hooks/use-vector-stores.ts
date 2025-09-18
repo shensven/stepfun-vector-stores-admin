@@ -1,6 +1,6 @@
 import type { AxiosError } from 'axios'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { StepfunError } from '@/services/api'
+import type { StepfunError } from '@/services/http-client'
 import type {
   ParamsListVectorStore,
   ParamsCreateVectorStore,
@@ -10,8 +10,8 @@ import type {
   ResponseAddFiles,
   ParamsAddFile,
   ParamsRemoveFile,
-} from '@/services/vectorStoresAPI'
-import { VectorStoresApiService } from '@/services/vectorStoresAPI'
+} from '@/services/vector-stores-api'
+import { VectorStoresApiService } from '@/services/vector-stores-api'
 import { toast } from 'sonner'
 
 export function useListVectorStores(params?: ParamsListVectorStore) {

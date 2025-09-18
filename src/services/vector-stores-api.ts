@@ -1,5 +1,5 @@
-import axiosInstance from './api'
-import type { PaginatedResponse } from './api'
+import axiosInstance from './http-client'
+import type { PaginatedResponse } from './http-client'
 
 // Vector Store 对象
 export interface VectorStore {

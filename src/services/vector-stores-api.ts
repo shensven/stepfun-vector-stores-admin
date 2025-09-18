@@ -53,6 +53,13 @@ export interface VectorStoreFile {
   }
 }
 
+export interface ParamsListFiles {
+  limit?: number
+  order?: 'asc' | 'desc'
+  before?: string
+  after?: string
+}
+
 export interface ParamsRemoveFile {
   vectorStoreId: string
   fileId: string
@@ -130,12 +137,13 @@ export class VectorStoresApiService {
   /**
    * 查看知识库中的文件列表
    * @param vectorStoreId 知识库 ID
+   * @param params 分页参数
    * @returns 文件列表
    */
-  static async listFiles(vectorStoreId: string) {
+  static async listFiles(vectorStoreId: string, params?: ParamsListFiles) {
     const { data } = await axiosInstance.get<
       PaginatedResponse<VectorStoreFile>
-    >(`${this.basePath}/${vectorStoreId}/files`)
+    >(`${this.basePath}/${vectorStoreId}/files`, { params })
     return data
   }
 

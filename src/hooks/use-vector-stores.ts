@@ -4,6 +4,7 @@ import type { StepfunError } from '@/services/http-client'
 import type {
   ParamsListVectorStore,
   ParamsCreateVectorStore,
+  ParamsListFiles,
   ParamsAddFiles,
   ResponseCreateVectorStore,
   ResponseDelete,
@@ -66,14 +67,16 @@ export function useDeleteVectorStore() {
 
 type ListFilesOptions = {
   vectorStoreId: string
+  pagination?: ParamsListFiles
   enabled?: boolean
   staleTime?: number
 }
+
 export function useListFiles(params: ListFilesOptions) {
-  const { vectorStoreId, enabled = true, staleTime = 5 * 60 * 1000 } = params
+  const { vectorStoreId, pagination, enabled = true, staleTime = 5 * 60 * 1000 } = params
   return useQuery({
-    queryKey: ['vector_stores_files', vectorStoreId],
-    queryFn: () => VectorStoresApiService.listFiles(vectorStoreId),
+    queryKey: ['vector_stores_files', vectorStoreId, pagination],
+    queryFn: () => VectorStoresApiService.listFiles(vectorStoreId, pagination),
     enabled: enabled && !!vectorStoreId,
     staleTime, // 允许自定义缓存时间
   })

@@ -53,13 +53,23 @@ function formatDate(timestamp: number): string {
 export function VectorStoresFilesDrawer() {
   const { open, setOpen, currentRow, setCurrentRow } = useVectorStores()
 
-  // 当前知识库内的文件
-  const { data: filesData } = useListFiles(currentRow?.id || '')
-  const includedFiles = filesData?.data || []
+  // 当前知识库内的文件 - 只在 drawer 打开且有选中行时执行
+  const { data: filesData } = useListFiles({
+    vectorStoreId: currentRow?.id || '',
+    enabled: open === 'list-files' && !!currentRow?.id,
+    staleTime: 2 * 60 * 1000, // Drawer 内数据更新频繁，缩短缓存时间
+  })
 
-  // 所有文件列表（来自 /files）
-  const { data: allFilesData } = useFilesList()
-  const allFiles = allFilesData?.data || []
+  // 使用 useMemo 包装 includedFiles，避免每次渲染都创建新数组
+  const includedFiles = useMemo(() => filesData?.data || [], [filesData?.data])
+
+  // 所有文件列表（来自 /files）- 只在 drawer 打开时执行
+  const { data: allFilesData } = useFilesList({
+    enabled: open === 'list-files',
+  })
+
+  // 使用 useMemo 包装 allFiles，避免每次渲染都创建新数组
+  const allFiles = useMemo(() => allFilesData?.data || [], [allFilesData?.data])
 
   // 本地分页状态
   const [pageIndex, setPageIndex] = useState(0)

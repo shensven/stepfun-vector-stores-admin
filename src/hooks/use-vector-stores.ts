@@ -64,10 +64,18 @@ export function useDeleteVectorStore() {
   })
 }
 
-export function useListFiles(vectorStoreId: string) {
+type ListFilesOptions = {
+  vectorStoreId: string
+  enabled?: boolean
+  staleTime?: number
+}
+export function useListFiles(params: ListFilesOptions) {
+  const { vectorStoreId, enabled = true, staleTime = 5 * 60 * 1000 } = params
   return useQuery({
     queryKey: ['vector_stores_files', vectorStoreId],
     queryFn: () => VectorStoresApiService.listFiles(vectorStoreId),
+    enabled: enabled && !!vectorStoreId,
+    staleTime, // 允许自定义缓存时间
   })
 }
 

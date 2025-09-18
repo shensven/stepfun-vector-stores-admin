@@ -9,11 +9,15 @@ import {
 } from '@/services/filesAPI'
 import { toast } from 'sonner'
 
-export function useList() {
+type ListOptions = {
+  enabled?: boolean
+}
+export function useList(options?: ListOptions) {
   return useQuery({
     queryKey: ['files'],
     queryFn: () => FilesApiService.getList(),
     staleTime: 5 * 60 * 1000, // 5分钟内数据保持新鲜
+    enabled: options?.enabled !== false,
   })
 }
 

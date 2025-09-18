@@ -6,6 +6,7 @@ const config: KnipConfig = {
   rules: {
     files: 'warn',
     dependencies: 'warn',
+    devDependencies: 'warn',
     exports: 'warn',
     types: 'warn',
   },

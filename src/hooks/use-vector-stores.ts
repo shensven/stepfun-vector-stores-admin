@@ -73,7 +73,12 @@ type ListFilesOptions = {
 }
 
 export function useListFiles(params: ListFilesOptions) {
-  const { vectorStoreId, pagination, enabled = true, staleTime = 5 * 60 * 1000 } = params
+  const {
+    vectorStoreId,
+    pagination,
+    enabled = true,
+    staleTime = 5 * 60 * 1000,
+  } = params
   return useQuery({
     queryKey: ['vector_stores_files', vectorStoreId, pagination],
     queryFn: () => VectorStoresApiService.listFiles(vectorStoreId, pagination),
